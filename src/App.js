@@ -1,7 +1,9 @@
+import React from "react";
+import ValidatedForm from "./Components/Signup";
 function App() {
   return (
     <>
-    <h1>Photographia</h1>
+    <ValidatedForm/>
     </>
   );
 }
