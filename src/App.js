@@ -1,7 +1,11 @@
+import LoginPage from './Components/Login/index'
+// import MyGallery from './Components/MyGallery/index'
+
 function App() {
   return (
     <>
-    <h1>Photographia</h1>
+    <LoginPage/>
+    {/* <MyGallery/> */}
     </>
   );
 }
