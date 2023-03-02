@@ -1,12 +1,12 @@
 import React from "react";
-import ValidatedForm from "./Components/Signup";
 import LoginPage from './Components/Login/index'
+import SignUp from "./Components/Signup";
 // import MyGallery from './Components/MyGallery/index'
 function App() {
   return (
     <>
-    <ValidatedForm/>
-    <LoginPage/>
+    <SignUp/>
+    {/* <LoginPage/> */}
     {/* <MyGallery/> */}
    </>
   );
