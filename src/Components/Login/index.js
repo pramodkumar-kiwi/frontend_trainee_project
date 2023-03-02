@@ -33,7 +33,7 @@ const LoginPage = () => {
         <div className='body'></div>
         <div className='bg-img'>
             <div className='form-container'>
-                <form className='form'>
+                <form className='form-abc'>
                     <p style={{ color: "red", margin: "0" }}>
                         {error}
                     
@@ -42,10 +42,10 @@ const LoginPage = () => {
                     <h1>Login Page</h1>
 
                     <label htmlFor="email"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" value={username} onChange={handleUsernameChange} required />
+                    <input type="text" className='abc-abc' placeholder="Enter Username" name="username" value={username} onChange={handleUsernameChange} required />
 
                     <label htmlFor="password"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" value={password} onChange={handlePasswordChange} required />
+                    <input className='abc-abc' type="password" placeholder="Enter Password" name="password" value={password} onChange={handlePasswordChange} required />
 
                     <button type="submit" className="btn" onClick={handleSubmit}>Login</button>
 
