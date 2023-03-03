@@ -6,6 +6,7 @@ const LoginPage = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [err, setErr] = useState(false);
     const error = "INVALID CREDENTIALS!!! PLEASE TRY AGAIN.";
 
     const handleUsernameChange = (e) => {
@@ -19,43 +20,44 @@ const LoginPage = () => {
 
         axios.post('/api/login', { username, password })
             .then((response) => {
+                setErr(false);
                 setPassword('');
                 setUsername('');
                 console.log(response.data);
                 //navigation in future
             })
             .catch((error) => {
+                setErr(true);
                 console.log(error);
             });
     }
 
     return <>
-        <div className='body'></div>
-        <div className='bg-img'>
-            <div className='form-container'>
-                <form className='form-abc'>
-                    <p style={{ color: "red", margin: "0" }}>
+        {/* <div className='body'></div> */}
+        <div className='myLogin-bg-img'>
+            {/* <div className='login-form-container'> */}
+                <form className='myLogin-form'>
+                    {setErr ? <p className='myLogin-error_msg'>
                         {error}
-                    
-                    </p>
+                    </p> : ""}
 
-                    <h1>Login Page</h1>
+                    <h1 className='myLogin-heading'>Login Page</h1>
 
                     <label htmlFor="email"><b>Username</b></label>
-                    <input type="text" className='abc-abc' placeholder="Enter Username" name="username" value={username} onChange={handleUsernameChange} required />
+                    <input type="text" className='myLogin-inputs' placeholder="Enter Username" name="username" value={username} onChange={handleUsernameChange} required />
 
                     <label htmlFor="password"><b>Password</b></label>
-                    <input className='abc-abc' type="password" placeholder="Enter Password" name="password" value={password} onChange={handlePasswordChange} required />
+                    <input className='myLogin-inputs' type="password" placeholder="Enter Password" name="password" value={password} onChange={handlePasswordChange} required />
 
-                    <button type="submit" className="btn" onClick={handleSubmit}>Login</button>
+                    <button type="submit" className="myLogin_btn" onClick={handleSubmit}>Login</button>
 
-                    <hr />
+                    <hr className='.myLogin_hr'/>
                     <p>Don't have an account?</p>
 
-                    <button type="submit" className="btn">Sign Up</button>
+                    <button type="submit" className="myLogin_btn">Sign Up</button>
                 </form>
             </div>
-        </div>
+        {/* </div> */}
 
     </>
 }
