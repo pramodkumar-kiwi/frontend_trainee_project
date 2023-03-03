@@ -15,9 +15,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import Link from "@mui/material/Link";
+import { Link as Rlink, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -25,15 +27,21 @@ const SignUp = () => {
   };
   const phoneRegExp =
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const emailRegExp =
+       /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  const nameRegExp =
+       /^[A-Z][a-z]{1,30}([-'][A-Z][a-z]{1,30})?$/g;
 
   const validationSchema = yup.object({
       firstName: yup
           .string("Enter your first name")
           .min(3, "must be at least 3 characters long")
+          .matches(nameRegExp,"Initials should be capital rest small with no spaces")
           .required("First name is required"),
       lastName: yup
           .string("Enter your last name")
           .min(3, "must be at least 3 characters long")
+          .matches(nameRegExp,"Initials should be capital rest small with no spaces")
           .required("Last name is required"),
       username: yup
           .string("Enter your user name")
@@ -47,7 +55,7 @@ const SignUp = () => {
                       const response = await axios.get(
                           `https://dummyjson.com/users/search?q=${value}`
                       );
-                      //console.log(response);
+                    //   console.log(response);
                       if (response.data.total > 0) return false; // or true as you see fit
                       return true;
                   } catch (error) {
@@ -59,6 +67,7 @@ const SignUp = () => {
       email: yup
           .string("Enter your email")
           .email("Enter a valid email")
+          .matches(emailRegExp, "Email is not valid")
           .required("Email is required")
           .test(
               "Unique Email",
@@ -115,7 +124,7 @@ const SignUp = () => {
               );
               console.log(data);
               localStorage.clear("signup_vals");
-              // navigate("/");
+              navigate("/");
           } catch (error) {
               console.log(error);
               alert(error.response.data.message);
@@ -127,7 +136,7 @@ const SignUp = () => {
   React.useEffect(() => {
       const token = localStorage.getItem("token");
       if (token) {
-          // navigate("/");
+          navigate("/");
       }
       const saved = JSON.parse(localStorage.getItem("signup_vals"));
       if (saved) {
@@ -215,7 +224,7 @@ const SignUp = () => {
                               autoComplete="username"
                               value={formik.values.username}
                               onChange={formik.handleChange}
-                              error={formik.errors.username}
+                              error={formik.errors.username && formik.touched.username}
                               helperText={formik.errors.username}
                           />
                       </Grid>
@@ -230,7 +239,7 @@ const SignUp = () => {
                               autoComplete="email"
                               value={formik.values.email}
                               onChange={formik.handleChange}
-                              error={formik.errors.email}
+                              error={formik.errors.email && formik.touched.email}
                               helperText={formik.errors.email}
                           />
                       </Grid>
@@ -284,23 +293,25 @@ const SignUp = () => {
                           />
                       </Grid>
                   </Grid>
+                  
                   <Button
                       type="submit"
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                       disabled={formik.isSubmitting}
+                    
                   >
                       Sign Up
                   </Button>
                   <Grid container justifyContent="flex-end">
-                      {/* <Grid item>
-                          <Rlink to="signin">
+                      <Grid item>
+                          <Rlink to="/signin">
                               <Link variant="body2">
                                   Already have an account? Sign in
                               </Link>
                           </Rlink>
-                      </Grid> */}
+                      </Grid>
                   </Grid>
               </Box>
           </Box>
