@@ -1,0 +1,70 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    background-color: rgb(40, 39, 39);
+}
+
+.nav-buttons {
+    display: block;
+    background-color: rgb(40, 39, 39);
+    color: white;
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: large;
+}
+
+
+
+.nav-buttons:hover {
+    background-color: #111;
+}
+
+.nav-btn-link{
+    text-decoration: none;
+    width: 33.33%;
+}
+
+.photoGallery-container {
+    height: 200vh;
+    width: 100%;
+    background-color: rgb(146, 101, 188);
+    /* width: 400px;
+    height: 200px;
+    border: 2px black solid; */
+}
+.photoGallery-container .active{
+    background-color: rgb(10, 4, 17);
+}
+
+.videoGallery-container {
+    height: 200vh;
+    width: 100%;
+    background-color: rgb(135, 178, 180);
+    /* width: 400px;
+    height: 200px;
+    border: 2px black solid; */
+}
+
+.userProfile-container {
+    height: 200vh;
+    width: 100%;
+    background-color: rgb(189, 94, 113);
+    /* width: 400px;
+    height: 200px;
+    border: 2px black solid; */
+}
+
+h1{
+    margin: 0;
+}
+
+
+.add-update-btn{
+    height: 90px;
+    width: 90px;
+    font-size: 3rem;
+}
