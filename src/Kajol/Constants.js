@@ -1,1 +1,0 @@
-export const error = "Invalid credentials!! Please try again.";

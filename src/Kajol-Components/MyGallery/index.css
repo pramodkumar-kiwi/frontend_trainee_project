@@ -1,0 +1,170 @@
+.photoGallery-container {
+    height: 84vh;
+    width: 100%;
+    background-color: rgb(255, 104, 134);
+    /* width: 400px;
+    height: 200px;
+    border: 2px black solid; */
+}
+
+.videoGallery-container {
+    height: 200vh;
+    width: 100%;
+    background-color: rgb(135, 178, 180);
+    /* width: 400px;
+    height: 200px;
+    border: 2px black solid; */
+}
+
+
+/* <------------------------------ Sub-Component: NAVBAR ----------------------------> */
+.navbar {
+    width: 100%;
+    display: flex;
+    background-color: rgb(40, 39, 39);
+}
+
+.nav-buttons {
+    display: block;
+    background-color: rgb(40, 39, 39);
+    color: white;
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: large;
+}
+
+.nav-buttons:hover {
+    background-color: #111;
+}
+
+.nav-btn-link {
+    text-decoration: none;
+    width: 33.33%;
+}
+
+.active {
+    background-color: #111;
+}
+
+/* <------------------------------ Sub-Component: ADD_UPDATE ----------------------------> */
+.add-icon-icon {
+    float: right;
+    margin: 20px;
+    height: 58px;
+    width: 70px;
+    font-size: 2.5rem;
+    border-radius: 5px;
+    border: none;
+    color: beige;
+    background-color: #111;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.add-icon-icon:hover {
+    background-color: #1d1d1d;
+    color: green;
+}
+
+.drop-down {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    height: 300px;
+    width: 700px;
+    padding: 2rem;
+    border-radius: 0 0 5px 5px;
+    z-index: 5;
+    background: cornflowerblue;
+}
+
+.add_update-inp, .add_update-inp:active{
+    background-color: white;
+    opacity: 0.3;
+    border: none;
+    border-bottom: 1px solid #111;
+    height: 50px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #111;
+}
+
+.btn{
+    float: right;
+    height: 40px;
+    width: 40px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: none;
+    color: beige;
+    background-color: #111;
+    cursor: pointer;
+    /* text-align: center; */
+    /* padding: 5px; */
+}
+
+.btn:hover {
+    color: red;
+    opacity: 0.9;
+}
+
+.h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+.centre {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+
+/* .table-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+    height: 90vh;
+    margin-top: 10vh;
+    width: 100vw;
+    opacity: 50%;
+} */
+
+
+/* <------------------------------ Sub-Component: ALBUMS ----------------------------> */
+.no-albums_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    opacity: 0.5;
+}
+
+
+
+
+/* <----------------------------USER PROFILE --------------------------> */
+.userProfile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+.userProfile-myBtn {
+    height: 35px;
+    width: 30%;
+    margin: 20px;
+}
