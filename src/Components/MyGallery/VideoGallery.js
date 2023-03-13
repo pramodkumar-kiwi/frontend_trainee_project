@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import '../index.css'
-import Navbar from '../ItsComponents/Navbar'
-import Add_UpdateBtn from '../ItsComponents/Add_UpdateBtn'
-import Albums from '../ItsComponents/Albums'
+import './index.css'
+import Navbar from './Navbar'
+import Add_UpdateBtn from './Add_UpdateBtn'
+import Albums from './Albums'
 import { useNavigate } from 'react-router-dom';
-import {accessToken, refreshToken} from '../../Constants'
+import {accessToken, refreshToken} from '../Constants'
 
 const VideoGallery = () => {
 

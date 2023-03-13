@@ -1,17 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from './Components/Signup/index'
-import LoginPage from "./Kajol-Components/Login/index";
-import PhotoGallery from './Kajol-Components/MyGallery/MainPages/PhotoGallery';
-import VideoGallery from './Kajol-Components/MyGallery/MainPages/VideoGallery';
-import UserProfile from './Kajol-Components/MyGallery/MainPages/UserProfile';
-
-import React from 'react'
+import LoginPage from "./Components/Login/index";
+import SignUp from "./Components/Signup/index";
+import PhotoGallery from './Components/MyGallery/PhotoGallery';
+import VideoGallery from './Components/MyGallery/VideoGallery';
+import UserProfile from './Components/MyGallery/UserProfile';
 
 function App() {
 
   return (
     <>
-    {/* <SignUp/> */}
     <BrowserRouter>
         <Routes>
           <Route path='/' element={<LoginPage/>}></Route>
@@ -21,8 +18,6 @@ function App() {
           <Route path="/userProfile" element={<UserProfile/>}></Route>
         </Routes>
       </BrowserRouter>
-      {/* <PhotoGallery/> */}
-      
     </>
   );
 }
