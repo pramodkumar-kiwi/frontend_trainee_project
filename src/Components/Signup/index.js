@@ -17,6 +17,7 @@ import * as yup from "yup";
 import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
+import { emailRegExp,phoneRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE, PHONE_REQUIRE, PHONENO_INVALID, TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE } from "../constants";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,297 +26,317 @@ const SignUp = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const phoneRegExp =
-      /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-  const emailRegExp =
-       /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  const nameRegExp =
-       /^[A-Z][a-z]{1,30}([-'][A-Z][a-z]{1,30})?$/g;
-
-  const validationSchema = yup.object({
-      firstName: yup
-          .string("Enter your first name")
-          .min(3, "must be at least 3 characters long")
-          .matches(nameRegExp,"Initials should be capital rest small with no spaces")
-          .required("First name is required"),
-      lastName: yup
-          .string("Enter your last name")
-          .min(3, "must be at least 3 characters long")
-          .matches(nameRegExp,"Initials should be capital rest small with no spaces")
-          .required("Last name is required"),
+const validationSchema = yup.object({
+    firstName: yup
+      .string(F_NAME)
+      .min(3,MIN_CHARACTER )
+      .matches(
+        nameRegExp,
+        NAME_regex_message
+      )
+      .required(FIRST_NAME_REQUIRE),
+    lastName: yup
+      .string(ENTER_YOUR_LAST_NAME)
+      .min(3,MIN_CHARACTER)
+      .matches(
+        nameRegExp,
+        NAME_regex_message
+      )
+      .required(LAST_NAME_IS_REQUIRED),
       username: yup
-          .string("Enter your user name")
-          .min(3, "must be at least 3 characters long")
-          .required("User name is required")
-          .test(
-              "Unique username",
-              "Username already in use",
-              async function validateUserName(value) {
-                  try {
-                      const response = await axios.get(
-                          `https://dummyjson.com/users/search?q=${value}`
-                      );
-                    //   console.log(response);
-                      if (response.data.total > 0) return false; // or true as you see fit
-                      return true;
-                  } catch (error) {
-                      console.log(error);
-                      return false;
-                  }
+      .string(ENTER_YOUR_USERNAME)
+      .test(
+          UNIQUE_USERNAME,
+          USERNAME_ALREADY_USE,
+          async (value, context) => {
+              try {
+                  await yup
+                      .string(ENTER_YOUR_USERNAME)
+                      .required(USERNAME_IS_REQUIRED)
+                      .min(8,USERNAME_LENGTH )
+                      .validate(value);
+                  const config = {
+                      headers: { "Content-Type": "application/json" },
+                  };
+                  const response = await axios.get(
+                      `https://30e4-182-74-85-106.in.ngrok.io/user/username-validator/0/?username=${value}`,
+                      config
+                  );
+                  console.log(response);
+                  return true;
+              } catch (error) {
+                  if (error?.response?.data?.username[0])
+                      error.message = error.response.data.username[0];
+                  return context.createError({
+                      message: error.message,
+                  });
               }
-          ),
-      email: yup
-          .string("Enter your email")
-          .email("Enter a valid email")
-          .matches(emailRegExp, "Email is not valid")
-          .required("Email is required")
-          .test(
-              "Unique Email",
-              "Email already in use",
-              async function validateEmail(value) {
-                  try {
-                      const response = await axios.get(
-                          `https://dummyjson.com/users/search?q=${value}`
-                      );
-                      //console.log(response);
-                      if (response.data.total > 0) return false; // or true as you see fit
-                      return true;
-                  } catch (error) {
-                      console.log(error);
-                      return false;
-                  }
+          }
+      ),
+  email: yup
+      .string(ENTER_YOUR_EMAIL)
+      .matches(emailRegExp,EMAIL_REGEX_VALDATION_MESSAGE)
+      .test(
+          UNIQUE_EMAIL,
+          EMAIL_ALREADY_IN_USE,
+          async (value, context) => {
+              try {
+                  await yup
+                      .string(ENTER_YOUR_EMAIL)
+                      .required(EMAIL_VALIDATION)
+                      .email(ENTER_A_VALID_EMAIL)
+                      .validate(value);
+                  const config = {
+                      headers: { "Content-Type": "application/json" },
+                  };
+                  const response = await axios.get(
+                    `https://30e4-182-74-85-106.in.ngrok.io/user/emailvalidator/0/?email=${value}`,
+                      config
+                  );
+                  console.log(response);
+                  return true;
+              } catch (error) {
+                  if (error?.response?.data?.email[0])
+                      error.message = error.response.data.email[0];
+                  return context.createError({
+                      message: error.message,
+                  });
               }
-          ),
-      password: yup
-          .string("Enter your password")
-          .min(8, "Password should be of minimum 8 characters length")
-          .required("Password is required"),
-      phone: yup
-          .string()
-          .required("Phone number is required")
-          .matches(phoneRegExp, "Phone number is not valid")
-          .min(10, "too short")
-          .max(10, "too long"),
+          }
+      ),
+    password: yup
+      .string(ENTER_PASSWORD)
+      .min(8,PASSWORD_LENGTH)
+      .required(PASSWORD_REQUIRE),
+    phone: yup
+      .string()
+      .required(PHONE_REQUIRE)
+      .matches(phoneRegExp,PHONENO_INVALID)
+      .min(10, TOO_SHORT)
+      .max(10, TOO_LONG),
   });
 
   const blankInitialValues = {
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: "",
-      phone: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    phone: "",
   };
 
   const formik = useFormik({
-      initialValues: blankInitialValues,
-      validationSchema: validationSchema,
-      onSubmit: async (values) => {
-          console.log(values);
-          try {
-              const config = {
-                  headers: { "Content-Type": "application/json" },
-              };
-              const formData = JSON.stringify(values);
-              const { data } = await axios.post(
-                  `https://dummyjson.com/users/add`,
-                  formData,
-                  config
-              );
-              console.log(data);
-              localStorage.clear("signup_vals");
-              navigate("/");
-          } catch (error) {
-              console.log(error);
-              alert(error.response.data.message);
-              formik.setSubmitting(false);
-          }
-      },
-  });
+    initialValues: blankInitialValues,
+    validationSchema: validationSchema,
+    validateOnChange: false,
+    validateOnBlur: true,
+    onSubmit: async (values) => {
+        console.log(values);
+        try {
+            const config = {
+                headers: { "Content-Type": "multipart/form-data" },
+               
+            };
+            let formData = new FormData();
+            
+            Object.keys(values).forEach((key) => {
+                formData.append(key, values[key]);
+            });
+
+            const { data } = await axios.post(
+                `http://30e4-182-74-85-106.in.ngrok.io/user/signup/`,
+                formData,
+                config
+            );
+            console.log(data);
+            localStorage.clear("signup_vals");
+            navigate("/");
+        } catch (error) {
+            console.log(error.response.status);
+            if (error.response.status === 400) {
+                const responseErrors = {};
+                for (const [key, value] of Object.entries(
+                    error.response.data
+                )) {
+                    responseErrors[key] = value[0];
+                }
+                formik.setErrors(responseErrors);
+            }
+            formik.setSubmitting(false);
+        }
+    },
+});
 
   React.useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (token) {
-          navigate("/");
-      }
-      const saved = JSON.parse(localStorage.getItem("signup_vals"));
-      if (saved) {
-          formik.setValues(saved);
-      }
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+    const saved = JSON.parse(localStorage.getItem("signup_vals"));
+    if (saved) {
+      formik.setValues(saved);
+    }
   }, []);
 
   React.useEffect(() => {
-      if (formik.values !== blankInitialValues)
-          localStorage.setItem("signup_vals", JSON.stringify(formik.values));
+    if (formik.values !== blankInitialValues)
+      localStorage.setItem("signup_vals", JSON.stringify(formik.values));
   }, [formik.values]);
 
   return (
-      <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-              sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-              }}
-          >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                  <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                  Sign up
-              </Typography>
-              <Box
-                  component="form"
-                  noValidate
-                  onSubmit={formik.handleSubmit}
-                  sx={{ mt: 3 }}
-              >
-                  <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                          <TextField
-                              autoComplete="given-name"
-                              name="firstName"
-                              required
-                              fullWidth
-                              id="firstName"
-                              label="First Name"
-                              autoFocus
-                              value={formik.values.firstName}
-                              onChange={formik.handleChange}
-                              error={
-                                  formik.touched.firstName &&
-                                  formik.errors.firstName
-                              }
-                              helperText={
-                                  formik.touched.firstName &&
-                                  formik.errors.firstName
-                              }
-                          />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                          <TextField
-                              required
-                              fullWidth
-                              id="lastName"
-                              label="Last Name"
-                              name="lastName"
-                              autoComplete="family-name"
-                              value={formik.values.lastName}
-                              onChange={formik.handleChange}
-                              error={
-                                  formik.touched.lastName &&
-                                  formik.errors.lastName
-                              }
-                              helperText={
-                                  formik.touched.lastName &&
-                                  formik.errors.lastName
-                              }
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                              required
-                              fullWidth
-                              id="username"
-                              label="User Name"
-                              name="username"
-                              autoComplete="username"
-                              value={formik.values.username}
-                              onChange={formik.handleChange}
-                              error={formik.errors.username && formik.touched.username}
-                              helperText={formik.errors.username}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                              required
-                              fullWidth
-                              id="email"
-                              label="Email Address"
-                              type="email"
-                              name="email"
-                              autoComplete="email"
-                              value={formik.values.email}
-                              onChange={formik.handleChange}
-                              error={formik.errors.email && formik.touched.email}
-                              helperText={formik.errors.email}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              id="password"
-              autoComplete="new-password"
-              type={showPassword ? "text" : "password"}
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && formik.errors.password}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-                style={{
-                  marginLeft: 340,
-                  position: "absolute",
-                  marginBottom: 52,
-                }}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={formik.handleSubmit}
+          sx={{ mt: 3 }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="given-name"
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.firstName && formik.errors.firstName}
+                helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="family-name"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.lastName && formik.errors.lastName}
+                helperText={formik.touched.lastName && formik.errors.lastName}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={formik.errors.username && formik.touched.username}
+                helperText={formik.errors.username}
+                onBlur={formik.handleBlur}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                type="email"
+                name="email"
+                autoComplete="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.errors.email && formik.touched.email}
+                helperText={formik.errors.email}
+                onBlur={formik.handleBlur}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                id="password"
+                autoComplete="new-password"
+                type={showPassword ? "text" : "password"}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={formik.touched.password && formik.errors.password}
+                helperText={formik.touched.password && formik.errors.password}
+                onBlur={formik.handleBlur}
+              />
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  style={{
+                    marginLeft: 340,
+                    position: "absolute",
+                    marginBottom: 52,
+                  }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="phone"
+                label="Phone"
+                type="number"
+                id="phone"
+                autoComplete="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                error={formik.touched.phone && formik.errors.phone}
+                helperText={formik.touched.phone && formik.errors.phone}
+                onBlur={formik.handleBlur}
+              />
+            </Grid>
           </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                              required
-                              fullWidth
-                              name="phone"
-                              label="Phone"
-                              type="number"
-                              id="phone"
-                              autoComplete="phone"
-                              value={formik.values.phone}
-                              onChange={formik.handleChange}
-                              error={
-                                  formik.touched.phone && formik.errors.phone
-                              }
-                              helperText={
-                                  formik.touched.phone && formik.errors.phone
-                              }
-                          />
-                      </Grid>
-                  </Grid>
-                  
-                  <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                      disabled={formik.isSubmitting}
-                    
-                  >
-                      Sign Up
-                  </Button>
-                  <Grid container justifyContent="flex-end">
-                      <Grid item>
-                          <Rlink to="/signin">
-                              <Link variant="body2">
-                                  Already have an account? Sign in
-                              </Link>
-                          </Rlink>
-                      </Grid>
-                  </Grid>
-              </Box>
-          </Box>
-      </Container>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={formik.isSubmitting}
+          >
+            Sign Up
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Rlink to="/signin">
+                <Link variant="body2">Already have an account? Sign in</Link>
+              </Rlink>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
