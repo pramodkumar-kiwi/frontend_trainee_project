@@ -1,5 +1,5 @@
 .photoGallery-container {
-    height: 84vh;
+    min-height: 84vh;
     width: 100%;
     background-color: rgb(255, 104, 134);
     /* width: 400px;
@@ -83,18 +83,20 @@
     background: cornflowerblue;
 }
 
-.add_update-inp, .add_update-inp:active{
-    background-color: white;
-    opacity: 0.3;
+.add_update-inp,
+.add_update-inp:focus {
+    background-color: transparent;
+    text-align: center;
     border: none;
-    border-bottom: 1px solid #111;
+    border-bottom: 2px solid #111;
     height: 50px;
     font-size: 20px;
     margin-bottom: 30px;
     color: #111;
+    padding: 0;
 }
 
-.btn{
+.btn {
     float: right;
     height: 40px;
     width: 40px;
@@ -104,8 +106,6 @@
     color: beige;
     background-color: #111;
     cursor: pointer;
-    /* text-align: center; */
-    /* padding: 5px; */
 }
 
 .btn:hover {
@@ -116,6 +116,7 @@
 .h1 {
     text-align: center;
     font-size: 40px;
+    margin-bottom: 10px;
 }
 
 .centre {
@@ -123,19 +124,6 @@
     flex-direction: column;
     width: 80%;
 }
-
-
-/* .table-bg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: black;
-    height: 90vh;
-    margin-top: 10vh;
-    width: 100vw;
-    opacity: 50%;
-} */
-
 
 /* <------------------------------ Sub-Component: ALBUMS ----------------------------> */
 .no-albums_text {
@@ -148,9 +136,7 @@
 }
 
 
-
-
-/* <----------------------------USER PROFILE --------------------------> */
+/* <---------------------------------USER PROFILE ------------------------------------> */
 .userProfile-container {
     display: flex;
     align-items: center;
@@ -168,3 +154,36 @@
     width: 30%;
     margin: 20px;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    max-width: 300px;
+    border: 3px solid #111;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.slide-show {
+    display: inline;
+    background-color: black;
+    cursor: pointer;
+}
+
+.slide-show:hover {
+    opacity: 0.6;
+}
+
+.conatiner{
+    display: inline-block;
+    padding: 50px;
+    max-width: 300px;
+    margin: 0;
+}
+

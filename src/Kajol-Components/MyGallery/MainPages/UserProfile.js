@@ -19,18 +19,16 @@ const UserProfile = () => {
         signOut_postData({
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem(accessToken)}`
+            'Authorization': `Bearer ${localStorage.getItem(refreshToken)}`
           }
         }).then((response) => {
           console.log(response);
-          // localStorage.clear();
-          // navigate('/');
+          localStorage.clear();
+          navigate('/');
         }).catch((error) => {
           console.log(error);
       });
 
-      localStorage.clear();
-      navigate('/');
   };
 
   return (<>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { addAlbum } from '../../Constants';
 
 const Add_UpdateBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +6,7 @@ const Add_UpdateBtn = () => {
   const handleButtonClick = () => {
     setIsOpen(!isOpen);
   };
+
 
   return (
     <div>
@@ -17,13 +17,16 @@ const Add_UpdateBtn = () => {
       {isOpen && (
         <>
           <div className='drop-down'>
-          <button className='btn' onClick={handleButtonClick}>X</button>
-          <div className='centre'>
-            <h1 className='h1'>Album Name</h1>
-            
-            <input type='text' className='add_update-inp'/>
-            <button>{addAlbum}</button>
-          </div>
+            <button className='btn' onClick={handleButtonClick}>X</button>
+            <div className='centre'>
+              <h1 className='h1'>ALBUM NAME</h1>
+              <input type='text' className='add_update-inp' />
+            </div>
+            <div style={{ display: 'flex' }}>
+              <h3 style={{ margin: '0' }}>Add your files here: </h3>
+              <input type="file" id="files" name="files" multiple></input>
+            </div>
+
           </div>
         </>
       )}

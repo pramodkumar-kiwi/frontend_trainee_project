@@ -20,6 +20,8 @@ const PhotoGallery = () => {
       <div className='photoGallery-container'>
         <Add_UpdateBtn />
         <br/>
+        <br/>
+      
         <Albums />
       </div>
     </>
