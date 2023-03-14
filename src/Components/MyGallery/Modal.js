@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import './Modal.css'
+import TextField from '@mui/material/TextField';
+import { Button } from "@mui/material";
 
-const apiUrl = 'https://example.com/upload';
+const apiUrl = 'https://1869-182-74-85-106.in.ngrok.io/image/image-gallery/'
 
 const Modal = ({ handleClose, handleUpload }) => {
   const [file, setFile] = useState(null);
@@ -28,9 +30,19 @@ const Modal = ({ handleClose, handleUpload }) => {
   return (
     <div className="modal">
       <div className="modal-content" onDrop={handleDrop}>
+      <TextField
+          id="standard-password-input"
+          label="Gallery Name"
+          variant="standard"
+        />
+
+        <Button variant="outlined"
+        
+        >Save</Button>
         <div className="modal-header">
           <h3>Upload Image</h3>
         </div>
+       
         <div className="modal-body">
           {file && (
             <div className="preview">
@@ -91,7 +103,8 @@ const App = () => {
 
   return (
     <div>
-      <button  className="openmodelbutton" onClick={handleOpenModal}>Open Modal</button>
+      <i  className="fa
+      -solid fa-plus add-icon-icon" onClick={handleOpenModal}></i>
       {showModal && <Modal handleClose={handleCloseModal} handleUpload={handleImageUpload} />}
     </div>
   );

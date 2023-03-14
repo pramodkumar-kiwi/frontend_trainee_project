@@ -17,7 +17,11 @@ import * as yup from "yup";
 import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
-import { emailRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE,TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE, PHONE_REQUIRE, PHONENO_INVALID, phoneRegExp } from "../constants";
+import { emailRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE,TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE, PHONE_REQUIRE, PHONENO_INVALID, phoneRegExp, userNameMessage,userNameRegex, passwordMessage,passwordRegex} from "../Constants";
+
+
+
+
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -45,6 +49,7 @@ const validationSchema = yup.object({
       .required(LAST_NAME_IS_REQUIRED),
       username: yup
       .string(ENTER_YOUR_USERNAME)
+      .matches(userNameRegex,userNameMessage)
       .test(
           UNIQUE_USERNAME,
           USERNAME_ALREADY_USE,
@@ -61,7 +66,7 @@ const validationSchema = yup.object({
                      },
                   };
                   const response = await axios.get(
-                      `https://8f3a-111-93-193-70.in.ngrok.io/user/username-validator/0/?username=${value}`,
+                      `${process.env.REACT_APP_API}username-validator/0/?username=${value}`,
                       config
                   );
                   console.log(response);
@@ -94,7 +99,8 @@ const validationSchema = yup.object({
                      },
                   };
                   const response = await axios.get(
-                    `https://8f3a-111-93-193-70.in.ngrok.io/user/emailvalidator/0/?email=${value}`,
+                    // `https://1869-182-74-85-106.in.ngrok.io/user/emailvalidator/0/?email=${value}`,
+                    `${process.env.REACT_APP_API}emailvalidator/0/?email=${value}`,
                       config
                   );
                   console.log(response);
@@ -111,7 +117,9 @@ const validationSchema = yup.object({
     password: yup
       .string(ENTER_PASSWORD)
       .min(8,PASSWORD_LENGTH)
+      .matches(passwordRegex,passwordMessage)
       .required(PASSWORD_REQUIRE),
+      
     contact: yup
       .string()
       .required(PHONE_REQUIRE)
@@ -150,12 +158,13 @@ const validationSchema = yup.object({
             });
 
             const { data } = await axios.post(
-                `https://8f3a-111-93-193-70.in.ngrok.io/user/signup/`,
+                `${process.env.REACT_APP_API}signup/`,
                 formData,
                 config
             );
             console.log(data);
             localStorage.clear("signup_vals");
+
             navigate("/");
         } catch (error) {
             console.log(error.response.status);
