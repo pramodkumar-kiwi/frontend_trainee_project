@@ -1,7 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
 import './index.css'
+import { useNavigate, Link } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { signIn_postData } from '../Services';
 import { error } from '../Constants'
 
@@ -11,6 +11,7 @@ const LoginPage = () => {
     
     const [err, setErr] = useState(false);
 
+    /* This is to hide error message received after entering invalid credentials as soon as input fields are changed */
     const handleChange = () => {
         setErr(false);
     }

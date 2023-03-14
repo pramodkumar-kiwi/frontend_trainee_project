@@ -7,6 +7,7 @@ const Navbar = () => {
   const [videoGallery, setVideoGallery] = useState(false);
   const [userProfile, setUserProfile] = useState(false);
 
+  // This is to highlight the button of PhotoGallery page in the app 
   const onPhotoBtnClick = () => {
     setPhotoGallery(true)
 
@@ -14,6 +15,7 @@ const Navbar = () => {
     setUserProfile(false)
   }
 
+  // This is to highlight the button of VideoGallery page in the app 
   const onVideoBtnClick = () => {
     setVideoGallery(true)
 
@@ -21,6 +23,7 @@ const Navbar = () => {
     setUserProfile(false)
   }
 
+  // This is to highlight the button of UserProfile page in the app 
   const onUserProfileBtnClick = () => {
     setUserProfile(true)
 
