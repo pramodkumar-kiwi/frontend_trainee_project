@@ -39,10 +39,5 @@ export const refreshToken = "refreshToken";
 export const addAlbum = "ADD";
 export const updateAlbum = "SAVE";
 
-// export const headers = headers: {
-//     "Content-Type": "application/json",
-//     "Authorization": Bearer ${localStorage.getItem(accessKey)}
-//   }
-
 
   

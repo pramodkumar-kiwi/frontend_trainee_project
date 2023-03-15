@@ -21,7 +21,8 @@ const UserProfile = () => {
     signOut_postData({
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem(refreshToken)}`
+        "ngrok-skip-browser-warning": "237",
+        'Authorization': `Bearer ${localStorage.getItem(accessToken)}`
       }
     }).then((response) => {
       console.log(response);
