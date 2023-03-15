@@ -22,7 +22,7 @@ const UserProfile = () => {
       headers: {
         'Content-Type': 'application/json',
         "ngrok-skip-browser-warning": "237",
-        'Authorization': `Bearer ${localStorage.getItem(accessToken)}`
+        'Authorization': `Bearer ${localStorage.getItem(refreshToken)}`
       }
     }).then((response) => {
       console.log(response);

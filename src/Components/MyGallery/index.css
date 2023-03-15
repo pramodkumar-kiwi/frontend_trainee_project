@@ -122,11 +122,8 @@
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: center;
-    height: 60px;
-    width: 60px;
+    height: 100px;
+    width: 100px;
 }
 
 .slide-show {
@@ -144,6 +141,8 @@
     padding: 40px;
     max-width: 500px;
     margin: 0;
+    height: 210px;
+    width: 210px;
 }
 
 

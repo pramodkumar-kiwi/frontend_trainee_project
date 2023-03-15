@@ -13,21 +13,6 @@ const Albums = () => {
       {/* <p className='no-albums_text'>No Albums Found</p> */}
 
       <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
-      <MyAlbum/>
 
     </div>
   )

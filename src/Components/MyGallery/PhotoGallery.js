@@ -6,6 +6,7 @@ import Modal from './Modal'
 import Albums from './Albums'
 import {accessToken, refreshToken} from '../Constants'
 
+
 const PhotoGallery = () => {
 
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const PhotoGallery = () => {
       <Navbar />
       <div className='photoGallery-container'>
         <Modal />
-        <Albums />
+        <Albums/>
       </div>
     </>
   }
