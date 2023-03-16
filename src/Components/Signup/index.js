@@ -17,11 +17,8 @@ import * as yup from "yup";
 import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
+import { Signup_getdata } from '../Services'
 import { emailRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE,TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE, PHONE_REQUIRE, PHONENO_INVALID, phoneRegExp, userNameMessage,userNameRegex, passwordMessage,passwordRegex} from "../Constants";
-
-
-
-
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -29,6 +26,7 @@ const SignUp = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+    
   };
 const validationSchema = yup.object({
     first_name: yup
@@ -59,18 +57,8 @@ const validationSchema = yup.object({
                       .string(ENTER_YOUR_USERNAME)
                       .required(USERNAME_IS_REQUIRED)
                       .min(8,USERNAME_LENGTH )
-                      .validate(value);
-                  const config = {
-                      headers: { "Content-Type": "application/json",
-                       "ngrok-skip-browser-warning":"237"
-                     },
-                  };
-                  const response = await axios.get(
-                      `${process.env.REACT_APP_API}username-validator/0/?username=${value}`,
-                      config
-                  );
-                  console.log(response);
-                  return true;
+                      .validate(value);    
+              Signup_getdata(value)
               } catch (error) {
                   if (error?.response?.data?.username[0])
                       error.message = error.response.data.username[0];
@@ -99,7 +87,6 @@ const validationSchema = yup.object({
                      },
                   };
                   const response = await axios.get(
-                    // `https://1869-182-74-85-106.in.ngrok.io/user/emailvalidator/0/?email=${value}`,
                     `${process.env.REACT_APP_API}emailvalidator/0/?email=${value}`,
                       config
                   );

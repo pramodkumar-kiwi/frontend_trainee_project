@@ -5,6 +5,7 @@ import Add_UpdateBtn from './Add_UpdateBtn'
 import Albums from './Albums'
 import { useNavigate } from 'react-router-dom';
 import {accessToken, refreshToken} from '../Constants'
+import Modal from './Modal'
 
 const VideoGallery = () => {
 
@@ -19,8 +20,9 @@ const VideoGallery = () => {
   return (<>
     <Navbar />
     <div className='videoGallery-container'>
-      <Add_UpdateBtn />
+      
       <br/>
+      <Modal/>
       <Albums />
     </div>
   </>

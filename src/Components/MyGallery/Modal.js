@@ -1,13 +1,41 @@
 import React, { useState } from "react";
-import './Modal.css'
-import TextField from '@mui/material/TextField';
-import { Button } from "@mui/material";
-
-const apiUrl = 'https://1869-182-74-85-106.in.ngrok.io/image/image-gallery/'
+import "./Modal.css";
+import axios from "axios";
+import { accessToken } from "../Constants";
 
 const Modal = ({ handleClose, handleUpload }) => {
+  //states for file, and name
   const [file, setFile] = useState(null);
+  const [name, setName] = useState("");
 
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+  // code for creating a photo gallery
+  const createGallery = async (event) => {
+    event.preventDefault();
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "237",
+          Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
+        },
+      };
+      const gallery_name = {
+        gallery_name: event.currentTarget.gallery_name.value,
+      };
+      const { data } = await axios.post(
+        "https://a53f-182-74-85-106.in.ngrok.io/image/image-gallery/",
+        gallery_name,
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // function for droping the modal
   const handleDrop = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -19,7 +47,7 @@ const Modal = ({ handleClose, handleUpload }) => {
       setFile(file);
     }
   };
-
+  // function for uploading the picture.
   const handleUploadClick = () => {
     if (file) {
       handleUpload(file);
@@ -30,19 +58,29 @@ const Modal = ({ handleClose, handleUpload }) => {
   return (
     <div className="modal">
       <div className="modal-content" onDrop={handleDrop}>
-      <TextField
-          id="standard-password-input"
-          label="Gallery Name"
-          variant="standard"
-        />
+        <form>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={handleNameChange}
+          />
 
-        <Button variant="outlined"
-        
-        >Save</Button>
+          <button
+            className="button_Create_gallery"
+            type="submit"
+            onClick={createGallery}
+          >
+            Create Gallery
+          </button>
+        </form>
+
         <div className="modal-header">
           <h3>Upload Image</h3>
         </div>
-       
+
         <div className="modal-body">
           {file && (
             <div className="preview">
@@ -52,7 +90,10 @@ const Modal = ({ handleClose, handleUpload }) => {
           {!file && (
             <div className="drag-and-drop">
               <p>Drag and drop an image file here or click to browse.</p>
-              <input type="file" onChange={(event) => setFile(event.target.files[0])} />
+              <input
+                type="file"
+                onChange={(event) => setFile(event.target.files[0])}
+              />
             </div>
           )}
         </div>
@@ -76,36 +117,39 @@ const App = () => {
     setShowModal(true);
   };
 
-// code for uploading the file onto the server.
-  const handleImageUpload = async (file) => {
+  // code for uploading the imagefile onto the server.
+  const handleImageUpload = async (event) => {
+    event.preventDefault();
     const formData = new FormData();
-    formData.append('file', file);
-    console.log(file)
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: formData
-      });
-
-      if (response.ok) {
-        // file uploaded successfully
-        console.log('File uploaded successfully');
-      } else {
-        // error uploading file
-        console.log('Error uploading file');
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+    formData.append("image", event.target.files[0]);
+    formData.append(
+      "image_gallery_id",
+      gallery[selectedGalleryindex.current].id
+    );
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "ngrok-skip-browser-warning": "237",
+        Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
+      },
+    };
+    const addImage = await axios.post("api", config, formData);
+    console.log(addImage);
   };
-
 
   return (
     <div>
-      <i  className="fa
-      -solid fa-plus add-icon-icon" onClick={handleOpenModal}></i>
-      {showModal && <Modal handleClose={handleCloseModal} handleUpload={handleImageUpload} />}
+      <i
+        className="fa
+      -solid fa-plus add-icon-icon"
+        onClick={handleOpenModal}
+      ></i>
+      {showModal && (
+        <Modal
+          handleClose={handleCloseModal}
+          handleUpload={handleImageUpload}
+        />
+      )}
     </div>
   );
 };

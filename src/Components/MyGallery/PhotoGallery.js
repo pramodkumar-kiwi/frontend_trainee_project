@@ -2,10 +2,10 @@ import Modal from './Modal'
 import React, {useEffect} from 'react'
 import './index.css'
 import Navbar from './Navbar'
-import Add_UpdateBtn from './Add_UpdateBtn'
 import Albums from './Albums'
 import { useNavigate } from 'react-router-dom';
 import {accessToken, refreshToken} from '../Constants';
+import ImageGallery from './Imagegallery'
 
 const PhotoGallery = () => {
 
@@ -20,9 +20,7 @@ const PhotoGallery = () => {
       <Navbar />
       <div className='photoGallery-container'>
         <Modal/>
-        <br/>
-        <br/>
-      
+      {/* <ImageGallery/> */}
         <Albums />
       </div>
     </>
