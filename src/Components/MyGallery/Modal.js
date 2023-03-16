@@ -26,7 +26,7 @@ const Modal = ({ handleClose, handleUpload }) => {
         gallery_name: event.currentTarget.gallery_name.value,
       };
       const { data } = await axios.post(
-        "https://a53f-182-74-85-106.in.ngrok.io/image/image-gallery/",
+        "https://0ae1-182-74-85-106.in.ngrok.io/gallery/image-gallery/",
         gallery_name,
         config
       );
@@ -35,7 +35,9 @@ const Modal = ({ handleClose, handleUpload }) => {
       console.log(error);
     }
   };
-  // function for droping the modal
+  // This function is called when the user drops an image file onto the modal. 
+  // It prevents the default behavior of opening the file and sets the file state variable to the dropped file.
+  
   const handleDrop = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -47,10 +49,13 @@ const Modal = ({ handleClose, handleUpload }) => {
       setFile(file);
     }
   };
-  // function for uploading the picture.
+  
+  // function for "Upload" button.If a file has been selected, it calls the handleUpload function passed in as a prop with the selected file and then calls the handleClose function to close the modal.
   const handleUploadClick = () => {
     if (file) {
-      handleUpload(file);
+      for (let i = 0; i < file.length; i++) {
+        handleUpload(file[i]);
+      }
       handleClose();
     }
   };
@@ -93,6 +98,7 @@ const Modal = ({ handleClose, handleUpload }) => {
               <input
                 type="file"
                 onChange={(event) => setFile(event.target.files[0])}
+                multiple
               />
             </div>
           )}

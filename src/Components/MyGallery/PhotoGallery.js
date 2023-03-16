@@ -33,7 +33,7 @@ const PhotoGallery = () => {
         Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
       },
     };
-    const addImage = await axios.post("api", config, formData);
+    const addImage = await axios.post("https://0ae1-182-74-85-106.in.ngrok.io/gallery/images/", config, formData);
     console.log(addImage);
   };
 
