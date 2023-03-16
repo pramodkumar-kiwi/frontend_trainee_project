@@ -106,52 +106,5 @@ const Modal = ({ handleClose, handleUpload }) => {
   );
 };
 
-const App = () => {
-  const [showModal, setShowModal] = useState(false);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  // code for uploading the imagefile onto the server.
-  const handleImageUpload = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("image", event.target.files[0]);
-    formData.append(
-      "image_gallery_id",
-      gallery[selectedGalleryindex.current].id
-    );
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "ngrok-skip-browser-warning": "237",
-        Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
-      },
-    };
-    const addImage = await axios.post("api", config, formData);
-    console.log(addImage);
-  };
-
-  return (
-    <div>
-      <i
-        className="fa
-      -solid fa-plus add-icon-icon"
-        onClick={handleOpenModal}
-      ></i>
-      {showModal && (
-        <Modal
-          handleClose={handleCloseModal}
-          handleUpload={handleImageUpload}
-        />
-      )}
-    </div>
-  );
-};
-
-export default App;
+export default Modal;
