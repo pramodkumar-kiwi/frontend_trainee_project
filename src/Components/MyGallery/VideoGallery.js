@@ -4,7 +4,8 @@ import Navbar from './Navbar'
 import Modal from './Modal'
 import Albums from './Albums'
 import { useNavigate } from 'react-router-dom';
-import {accessToken, refreshToken} from '../Constants'
+import { accessToken, refreshToken } from '../Constants'
+
 
 const VideoGallery = () => {
 
@@ -21,7 +22,7 @@ const VideoGallery = () => {
     <Navbar />
     <div className='videoGallery-container'>
       <Modal />
-      <br/>
+      <br />
       <Albums />
     </div>
   </>

@@ -8,7 +8,7 @@ const Carousel_Slider = ({singleGalleryData}) => {
         <Carousel >
             {
                 singleGalleryData && singleGalleryData.image_gallery_set.map(item => 
-                <Item key={item.id} item={item} />)
+                <Item key={item.id} item={item}/>)
                 } 
             {/* {
                 singleGalleryData.map(item => <Item key={item.id} item={item} />)

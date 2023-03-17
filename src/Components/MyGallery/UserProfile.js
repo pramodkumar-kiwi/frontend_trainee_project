@@ -29,16 +29,18 @@ const UserProfile = () => {
 
   // This is to log-out the user and redirect to the log-in page 
   const handleLogOut = () => {
-    signOut_postData(details)
-      .then((response) => {
-        console.log(response);
-        console.log("THis");
-        localStorage.clear();
-        navigate('/');
-      }).catch((error) => {
-        console.log("err");
-        console.log(error);
-      });
+    localStorage.clear();
+    navigate('/');
+    // signOut_postData(details)
+    //   .then((response) => {
+    //     console.log(response);
+    //     console.log("THis");
+    //     localStorage.clear();
+    //     navigate('/');
+    //   }).catch((error) => {
+    //     console.log("err");
+    //     console.log(error);
+    //   });
   };
 
 

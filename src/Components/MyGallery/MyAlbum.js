@@ -40,26 +40,18 @@ const MyAlbum = () => {
     window.scrollTo({ top: 0, behavior: 'smooth', });
   }
 
-  // const handlePreview = (galleryID) => {
-  //   imageListing_getData(galleryID)
-  //     .then(response => {
-  //       const res = response.data;
-  //       setSingleGalleryData(res);
-  //       console.log(res);
-  //     }).catch(error => {
-  //       console.log(error);
-  //     });
-  // }
-
   // This is to delete whole album from gallery API
   const handleDeleteAlbum = (galleryID) => {
     albumListing_deleteData(galleryID)
       .then((response) => {
         return response;
+      }).then(() => {
+        getAllAlbumsData();
       })
       .catch(error => {
         return error;
       });
+      
   }
 
   return (
@@ -104,7 +96,7 @@ const MyAlbum = () => {
           <>
             <div className='drop-down'>
               <button onClick={handleClosePreview} title='Close Slider' className='preview-btn'>X</button>
-              <Carousel_Slider singleGalleryData={singleGalleryData[0]} />
+              <Carousel_Slider singleGalleryData={singleGalleryData[0]}/>
             </div>
           </>
         )
@@ -114,3 +106,15 @@ const MyAlbum = () => {
 }
 
 export default MyAlbum
+
+
+  // const handlePreview = (galleryID) => {
+  //   imageListing_getData(galleryID)
+  //     .then(response => {
+  //       const res = response.data;
+  //       setSingleGalleryData(res);
+  //       console.log(res);
+  //     }).catch(error => {
+  //       console.log(error);
+  //     });
+  // }
