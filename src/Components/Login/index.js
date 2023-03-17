@@ -36,6 +36,7 @@ const LoginPage = () => {
                         return errors;
                     }}
 
+                    /* This is to submit the form and logging in the user with the correct credentials*/
                     onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(false);
                         signIn_postData({
@@ -43,10 +44,9 @@ const LoginPage = () => {
                             password: values.password
                         }).then((response) => {
                             setErr(false);
-                            
-                            localStorage.setItem("accessToken", response.access);
-                            localStorage.setItem("refreshToken", response.refresh);
-
+                            localStorage.setItem("accessToken", response.data.access);
+                            localStorage.setItem("refreshToken", response.data.refresh);
+                            console.log(response.data)
                             navigate("/photoGallery");
                         })
                             .catch((error) => {

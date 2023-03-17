@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './index.css'
 import Navbar from './Navbar'
 import Modal from './Modal'
 import Albums from './Albums'
-import {accessToken, refreshToken} from '../Constants'
+import { accessToken, refreshToken } from '../Constants'
 
 
 const PhotoGallery = () => {
@@ -18,14 +18,14 @@ const PhotoGallery = () => {
     }
   });
 
-  
-    return <>
-      <Navbar />
-      <div className='photoGallery-container'>
-        <Modal />
-        <Albums/>
-      </div>
-    </>
-  }
+
+  return <>
+    <Navbar />
+    <div className='photoGallery-container'>
+      <Modal />
+      <Albums />
+    </div>
+  </>
+}
 
 export default PhotoGallery

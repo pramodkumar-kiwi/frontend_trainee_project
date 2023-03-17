@@ -9,29 +9,51 @@ const config = {
     }
 };
 
+export const ImageListing_deleteData = async (data) => {
+
+    const response = await axios.delete(`${process.env.REACT_APP_API}/gallery/images/${data}/`, config);
+
+    if (response.status === 200) {
+        return response;
+    } else {
+        console.log("Something went wrong!!");
+    }
+}
+
+export const albumListing_deleteData = async (data) => {
+
+    const response = await axios.delete(`${process.env.REACT_APP_API}/gallery/image-gallery/${data}/`, config);
+
+    if (response.status === 200) {
+        console.log('Working');
+        return response;
+    } else {
+        console.log("Something went wrong!!");
+    }
+}
 
 export const albumListing_getData = async (data) => {
 
-    const response = await axios.get(`${process.env.REACT_APP_API}/image/image-gallery/`, config);
+    const response = await axios.get(`${process.env.REACT_APP_API}/gallery/image-gallery/`, config);
 
     if (response.status === 200) {
-        console.log("Status Code 200. Bad Request");
         return response;
     } else {
-        console.log("Status Code other than 200. Bad Request");
+        console.log("Something went wrong!!");
     }
 
 }
 
+
+
 export const imageListing_getData = async (data) => {
 
-    const response = await axios.get(`https://a53f-182-74-85-106.in.ngrok.io/image/image/`, config);
+    const response = await axios.get(`${process.env.REACT_APP_API}/gallery/image-gallery/${data}/`, config);
 
     if (response.status === 200) {
-        console.log("JJ");
         return response;
     } else {
-        console.log("Status Code other than 200. Bad Request");
+        console.log("Something went wrong!!");
     }
 
 }
@@ -39,13 +61,28 @@ export const imageListing_getData = async (data) => {
 /* This is to get tokens as response from the Sign-in API after the correct credentials are sent */
 export const signIn_postData = async (data) => {
     const response = await axios.post(`${process.env.REACT_APP_API}/user/signin/`, data);
-    return response.data;
+    if (response.status === 200) {
+        return response;
+    } else {
+        console.log("Something went wrong!!");
+    }
+}
+
+// This is to assure that logged in user is a validated user.
+export const userProfile_getData = async (data) => {
+    const response = await axios.get(`${process.env.REACT_APP_API}/user/userprofile/`, config);
+
+    if (response.status === 200) {
+        return response;
+    } else {
+        console.log("Something went wrong!!");
+    }
 }
 
 // This is to log-out the current logged-in user after the bearer is passed
 export const signOut_postData = async (data) => {
-    const response = await axios.post(`${process.env.REACT_APP_API}/user/sign-out/`, data);
-    return response.data;
+    const response = await axios.post(`${process.env.REACT_APP_API}/user/sign-out/`, {config,data});
+    return response;
 }
 
 
