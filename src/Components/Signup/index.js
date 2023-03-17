@@ -65,7 +65,7 @@ const validationSchema = yup.object({
                },
             };
             const response =  await axios.get(
-                `${process.env.REACT_APP_API}username-validator/0/?username=${value}`,
+                `${process.env.REACT_APP_API}/user/username-validator/0/?username=${value}`,
                 config
             );
             if(response.status === 200){
@@ -102,7 +102,7 @@ const validationSchema = yup.object({
                      },
                   };
                   const response = await axios.get(
-                    `${process.env.REACT_APP_API}emailvalidator/0/?email=${value}`,
+                    `${process.env.REACT_APP_API}/user/emailvalidator/0/?email=${value}`,
                       config
                   );
                   if(response.status === 200){
@@ -165,7 +165,7 @@ const validationSchema = yup.object({
             });
 
             const { data } = await axios.post(
-                `${process.env.REACT_APP_API}signup/`,
+                `${process.env.REACT_APP_API}/user/signup/`,
                 formData,
                 config
             );
