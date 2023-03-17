@@ -4,6 +4,7 @@ import Carousel_Slider from './Carousel';
 import { albumListing_getData, albumListing_deleteData } from '../Services'
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsFillPencilFill } from 'react-icons/bs';
+import { BsInfoLg } from 'react-icons/bs';
 
 const MyAlbum = () => {
 
@@ -68,7 +69,11 @@ const MyAlbum = () => {
         myAlbumDetails.map((detail, i) => {
           return <div className='container' key={i} >
 
-            <h3 className='galleryHeading'>{detail["gallery_name"]} - <RiDeleteBinFill className='del' onClick={() => handleDeleteAlbum(detail["id"])} /><BsFillPencilFill className='edit' onClick={() => handleDeleteAlbum(detail["id"])} /></h3>
+            <h3 className='galleryHeading'>{detail["gallery_name"]}
+            <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
+                  <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
+                  <BsInfoLg className='preview-gallery' title='Preview Your Album' onClick={() => handlePreview(detail["gallery_name"])} />
+            </h3>
 
             <div className='slide-show' title="Click to preview" onClick={() => handlePreview(detail["gallery_name"])}>
 
@@ -79,10 +84,16 @@ const MyAlbum = () => {
                       <div className="grid-item" key={ii}><img src={el["image"]} alt='House' height='100px' width='100px' /></div>
                     </>
                   }
-                })}
-
+                })} 
               </div>
+
+              {/* <div className='gallery_crud'>
+                  <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
+                  <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
+                  <BsInfoLg className='preview-gallery' title='Preview Your Album' onClick={() => handlePreview(detail["gallery_name"])} />
+                </div> */}
             </div>
+            
           </div>
         })
       }

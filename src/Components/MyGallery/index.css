@@ -78,7 +78,7 @@
     margin: 0;
 }
 
-.del, .edit{
+.del, .edit, .preview-gallery{
     border: 1px solid black;
     padding: 2px;
     height: 20px;
@@ -95,6 +95,11 @@
 .edit:hover{
     background-color: black;
     color: green;
+}
+
+.preview-gallery:hover {
+    background-color: black;
+    color: beige;
 }
 
 .container {
