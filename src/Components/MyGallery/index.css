@@ -16,7 +16,6 @@
     border: 2px black solid; */
 }
 
-
 /* <------------------------------ Sub-Component: NAVBAR ----------------------------> */
 .navbar {
     width: 100%;
@@ -135,7 +134,6 @@
     opacity: 0.5;
 }
 
-
 /* <---------------------------------USER PROFILE ------------------------------------> */
 .userProfile-container {
     display: flex;
@@ -157,17 +155,42 @@
 
 .grid-container {
     display: grid;
+    position: relative;
     grid-template-columns: auto auto;
-    max-width: 300px;
+    width: 300px;
+    height: 300px;
     border: 3px solid #111;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    padding: 2px;
     font-size: 30px;
+    width: 149px;
+    height: 149px;
     text-align: center;
+}
+
+.grid-img {
+    width: 149px;
+    height: 149px;
+    object-fit: "cover";
+}
+
+.grid-gallery-number {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 149px;
+    width: 149px;
+    right: -5px;
+    bottom: -5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 10px;
 }
 
 .slide-show {
@@ -180,10 +203,9 @@
     opacity: 0.6;
 }
 
-.conatiner{
+.conatiner {
     display: inline-block;
     padding: 50px;
     max-width: 300px;
     margin: 0;
 }
-

@@ -5,68 +5,91 @@ import Navbar from "./Navbar";
 import Albums from "./Albums";
 import { useNavigate } from "react-router-dom";
 import { accessToken, refreshToken } from "../Constants";
-import ImageGallery from "./Imagegallery";
 import axios from "axios";
 
 const PhotoGallery = () => {
-  const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
+    const [gallery, setGallery] = React.useState([]);
+    const [showModal, setShowModal] = useState(false);
 
-  // code for uploading the imagefile onto the server.
-  const handleImageUpload = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("image", event.target.files[0]);
-    formData.append(
-      "image_gallery_id"
-      // gallery[selectedGalleryindex.current].id
-    );
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "ngrok-skip-browser-warning": "237",
-        Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
-      },
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
-    const addImage = await axios.post("https://0ae1-182-74-85-106.in.ngrok.io/gallery/images/", config, formData);
-    console.log(addImage);
-  };
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
 
-  const navigate = useNavigate();
+    // code for uploading the imagefile onto the server.
+    const handleImageUpload = async (data) => {
+        const formData = new FormData();
+        data.file.map((val) => formData.append("image", val));
+        formData.append("image_gallery_id", data.galleryId);
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "ngrok-skip-browser-warning": "237",
+                Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
+            },
+        };
+        const addImage = await axios.post(
+            "https://0ae1-182-74-85-106.in.ngrok.io/gallery/images/",
+            formData,
+            config
+        );
+        console.log(addImage);
+        getImageGallery();
+    };
 
-  useEffect(() => {
-    if (
-      localStorage.getItem(refreshToken) === null ||
-      localStorage.getItem(accessToken) === null
-    ) {
-      navigate("/");
-    }
-  });
-  return (
-    <>
-      <Navbar />
-      <div className="photoGallery-container">
-        {/* <ImageGallery/> */}
-        <Albums />
-        <i
-          className="fa
+    const getImageGallery = async () => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
+                "ngrok-skip-browser-warning": "237",
+            },
+        };
+        const response = await axios.get(
+            "https://0ae1-182-74-85-106.in.ngrok.io/gallery/image-gallery/",
+            config
+        );
+        console.log(response);
+        if (response?.data.length > 0) {
+            setGallery(response.data);
+        }
+    };
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (
+            localStorage.getItem(refreshToken) === null ||
+            localStorage.getItem(accessToken) === null
+        ) {
+            navigate("/");
+        } else {
+            getImageGallery();
+        }
+    }, []);
+    return (
+        <>
+            <Navbar />
+            <div className="photoGallery-container">
+                
+                {gallery && <Albums gallery={gallery} />}
+                <i
+                    className="fa
       -solid fa-plus add-icon-icon"
-          onClick={handleOpenModal}
-        ></i>
-        {showModal && (
-          <Modal
-            handleClose={handleCloseModal}
-            handleUpload={handleImageUpload}
-          />
-        )}
-      </div>
-    </>
-  );
+                    onClick={handleOpenModal}
+                ></i>
+                {showModal && (
+                    <Modal
+                        handleClose={handleCloseModal}
+                        getImageGallery={getImageGallery}
+                        handleImageUpload={handleImageUpload}
+                    />
+                )}
+            </div>
+        </>
+    );
 };
 
 export default PhotoGallery;

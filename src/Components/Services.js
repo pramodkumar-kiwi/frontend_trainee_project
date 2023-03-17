@@ -17,20 +17,20 @@ export const signOut_postData = async (data) => {
   );
   return response.data;
 };
-export const Signup_getdata= async(value)=>{
-    const config = {
-        headers: { "Content-Type": "application/json",
-         "ngrok-skip-browser-warning":"237"
-       },
-    };
-    const response =  await axios.get(
-        `${process.env.REACT_APP_API}username-validator/0/?username=${value}`,
-        config
-    );
-    // if(response.status === 200){
-    //   return true;
-    // }else{
+// export const Signup_getdata= async(value)=>{
+//     const config = {
+//         headers: { "Content-Type": "application/json",
+//          "ngrok-skip-browser-warning":"237"
+//        },
+//     };
+//     const response =  await axios.get(
+//         `${process.env.REACT_APP_API}username-validator/0/?username=${value}`,
+//         config
+//     );
+//     if(response.status === 200){
+//       return true;
+//     }else{
 
-    // }
-    console.log(response);
-}
+//     }
+//     console.log(response);
+// }

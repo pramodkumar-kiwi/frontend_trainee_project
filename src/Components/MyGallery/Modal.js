@@ -3,114 +3,152 @@ import "./Modal.css";
 import axios from "axios";
 import { accessToken } from "../Constants";
 
-const Modal = ({ handleClose, handleUpload }) => {
-  //states for file, and name
-  const [file, setFile] = useState(null);
-  const [name, setName] = useState("");
+const Modal = ({ handleClose, getImageGallery, handleImageUpload }) => {
+    //states for file, and name
+    const [file, setFile] = useState([]);
+    const [galleryName, setGalleryName] = useState("");
+    const [galleryCreated, setGalleryCreated] = useState(false);
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-  // code for creating a photo gallery
-  const createGallery = async (event) => {
-    event.preventDefault();
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "237",
-          Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
-        },
-      };
-      const gallery_name = {
-        gallery_name: event.currentTarget.gallery_name.value,
-      };
-      const { data } = await axios.post(
-        "https://0ae1-182-74-85-106.in.ngrok.io/gallery/image-gallery/",
-        gallery_name,
-        config
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // This function is called when the user drops an image file onto the modal. 
-  // It prevents the default behavior of opening the file and sets the file state variable to the dropped file.
-  
-  const handleDrop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+    const handleNameChange = (event) => {
+        if (!galleryCreated) setGalleryName(event.target.value);
+    };
 
-    const { files } = event.dataTransfer;
+    const handleFiles = (e) => {
+        console.log(e.target.files);
+        const imageFiles = e.target.files;
+        const images = [];
+        for (let i = 0; i < imageFiles.length; i++) {
+            images.push(imageFiles[i]);
+        }
+        console.log(images);
+        setFile(images);
+    };
+    // code for creating a photo gallery
+    const createImageGallery = async (event) => {
+        event.preventDefault();
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "237",
+                    Authorization: `Bearer ${localStorage.getItem(
+                        accessToken
+                    )}`,
+                },
+            };
+            const gallery_name = {
+                gallery_name: galleryName,
+            };
+            const { data } = await axios.post(
+                "https://0ae1-182-74-85-106.in.ngrok.io/gallery/image-gallery/",
+                gallery_name,
+                config
+            );
+            console.log(data);
+            if (data?.message) {
+                alert(data.message);
+            }
+            setGalleryCreated(data);
+            getImageGallery();
+        } catch (error) {
+            console.log(error);
+            if (error?.response?.status === 400)
+                alert(error?.response?.data?.gallery_name[0]);
+        }
+    };
+    // This function is called when the user drops an image file onto the modal.
+    // It prevents the default behavior of opening the file and sets the file state variable to the dropped file.
 
-    if (files && files.length > 0) {
-      const file = files[0];
-      setFile(file);
-    }
-  };
-  
-  // function for "Upload" button.If a file has been selected, it calls the handleUpload function passed in as a prop with the selected file and then calls the handleClose function to close the modal.
-  const handleUploadClick = () => {
-    if (file) {
-      for (let i = 0; i < file.length; i++) {
-        handleUpload(file[i]);
-      }
-      handleClose();
-    }
-  };
+    const handleDrop = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (galleryCreated) {
+            const { files } = event.dataTransfer;
+            if (files && files.length > 0) {
+                //handleFiles(files)
+            }
+        }
+    };
 
-  return (
-    <div className="modal">
-      <div className="modal-content" onDrop={handleDrop}>
-        <form>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={handleNameChange}
-          />
+    // function for "Upload" button.If a file has been selected, it calls the handleUpload function passed in as a prop with the selected file and then calls the handleClose function to close the modal.
+    const handleUploadClick = async () => {
+        if (file) {
+            const data = { galleryId: galleryCreated.data.id, file: file };
+            await handleImageUpload(data);
+            handleClose();
+        }
+    };
 
-          <button
-            className="button_Create_gallery"
-            type="submit"
-            onClick={createGallery}
-          >
-            Create Gallery
-          </button>
-        </form>
+    return (
+        <div className="modal">
+            <div className="modal-content">
+                <form>
+                    <label htmlFor="galleryName">Name:</label>
+                    <input
+                        type="text"
+                        id="galleryName"
+                        name="galleryName"
+                        value={galleryName}
+                        onChange={handleNameChange}
+                    />
 
-        <div className="modal-header">
-          <h3>Upload Image</h3>
-        </div>
+                    <button
+                        className="button_Create_gallery"
+                        type="submit"
+                        onClick={createImageGallery}
+                        disabled={galleryCreated}
+                    >
+                        Create Gallery
+                    </button>
+                </form>
 
-        <div className="modal-body">
-          {file && (
-            <div className="preview">
-              <img src={URL.createObjectURL(file)} alt="Preview" />
+                <>
+                    {galleryCreated && (
+                        <>
+                            <div className="modal-header">
+                                <h3>Upload Image</h3>
+                            </div>
+
+                            <div className="modal-body">
+                                <div className="preview-images">
+                                    {file.map((val, ind) => (
+                                        <div key={ind} className="preview">
+                                            <img
+                                                src={URL.createObjectURL(val)}
+                                                alt="Preview"
+                                                className="grid-img"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                <div
+                                    className="drag-and-drop"
+                                    onDrop={handleDrop}
+                                >
+                                    <p>
+                                        Drag and drop an image file here or
+                                        click to browse.
+                                    </p>
+                                    <input
+                                        accept="image/*"
+                                        type="file"
+                                        onChange={handleFiles}
+                                        multiple
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
+                    <div className="modal-footer">
+                        <button onClick={handleClose}>Cancel</button>
+                        {galleryCreated && (
+                            <button onClick={handleUploadClick}>Upload</button>
+                        )}
+                    </div>
+                </>
             </div>
-          )}
-          {!file && (
-            <div className="drag-and-drop">
-              <p>Drag and drop an image file here or click to browse.</p>
-              <input
-                type="file"
-                onChange={(event) => setFile(event.target.files[0])}
-                multiple
-              />
-            </div>
-          )}
         </div>
-        <div className="modal-footer">
-          <button onClick={handleClose}>Cancel</button>
-          <button onClick={handleUploadClick}>Upload</button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
-
 
 export default Modal;

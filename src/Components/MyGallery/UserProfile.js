@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import Navbar from "./Navbar";
 import { accessToken, refreshToken } from "../Constants";
-import Myprofilemodal from "./Myprofilemodal";
 import './Modal.css';
 
 const UserProfile = () => {
@@ -32,7 +31,7 @@ const UserProfile = () => {
         <button className="userProfile-myBtn" onClick={handleButtonClick}>
           Open User Profile
         </button>
-        {isOpen && <Myprofilemodal userId={userId} setIsOpen={setIsOpen} />}
+        
         <button className="userProfile-myBtn" >
           Log Out
         </button>
