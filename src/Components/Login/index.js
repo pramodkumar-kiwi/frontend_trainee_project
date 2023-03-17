@@ -1,69 +1,83 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react'
-import axios from 'axios'
+import { useNavigate, Link } from 'react-router-dom';
 import './index.css'
+import { signIn_postData } from '../Services';
+import { error } from '../Constants'
 
 const LoginPage = () => {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const error = "INVALID CREDENTIALS!!! PLEASE TRY AGAIN.";
+    const navigate = useNavigate();
+    
+    const [err, setErr] = useState(false);
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value)
-    }
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value)
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        axios.post('/api/login', { username, password })
-            .then((response) => {
-                setPassword('');
-                setUsername('');
-                console.log(response.data);
-                //navigation in future
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    const handleChange = () => {
+        setErr(false);
     }
 
-    return <>
-        <div className='body'></div>
-        <div className='bg-img'>
-            <div className='form-container'>
-                <form className='form'>
-                    <p style={{ color: "red", margin: "0" }}>
-                        {error}
-                    
-                    </p>
+    return (
+        <div className='myLogin-bg-img'>
+            <div className='myLogin-form'>
+                {err ? <p className='myLogin-err'>{error}</p> : ""}
+                <h1 className='myLogin-heading'>Login Page</h1>
 
-                    <h1>Login Page</h1>
+                <Formik
+                    initialValues={{ username: '', password: '' }}
 
-                    <label htmlFor="email"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" value={username} onChange={handleUsernameChange} required />
+                    validate={values => {
+                        const errors = {};
+                        if (!values.username) {
+                            errors.username = 'Username is required';
+                        }
+                        if (!values.password) {
+                            errors.password = 'Password is required';
+                        }
+                        return errors;
+                    }}
 
-                    <label htmlFor="password"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" value={password} onChange={handlePasswordChange} required />
+                    onSubmit={(values, { setSubmitting }) => {
+                        setSubmitting(false);
+                        signIn_postData({
+                            username: values.username,
+                            password: values.password
+                        }).then((response) => {
+                            setErr(false);
+                            
+                            localStorage.setItem("accessToken", response.access);
+                            localStorage.setItem("refreshToken", response.refresh);
 
-                    <button type="submit" className="btn" onClick={handleSubmit}>Login</button>
+                            navigate("/photoGallery");
+                        })
+                            .catch((error) => {
+                                setErr(true);
+                            });
+                    }}>
 
-                    <hr />
-                    <p>Don't have an account?</p>
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <div>
+                                <Field type="text" name="username" className='myLogin-inputs' placeholder="Enter Username" onClick={handleChange}
+                        />
+                                <ErrorMessage name="username" component="div" className='myLogin_error_msg' />
+                            </div>
+                            <div>
+                                <Field type="password" name="password" className='myLogin-inputs' placeholder="Enter Password" onClick={handleChange}
+                                />
+                                <ErrorMessage name="password" component="div" className='myLogin_error_msg' />
+                            </div>
+                            <button type="submit" disabled={isSubmitting} className="myLogin_btn">
+                                Login
+                            </button>
 
-                    <button type="submit" className="btn">Sign Up</button>
-                </form>
+                            <hr className='.myLogin_hr' />
+                            <p style={{ textAlign: "center" }}>Don't have an account?<Link to='/signUp' className='myLogin_myLink'>Sign Up</Link></p>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
+    );
 
-    </>
 }
 
 export default LoginPage
-
-
-
-
-
-{/* { error && <div>{error}</div>} */}
