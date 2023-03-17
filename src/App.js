@@ -6,13 +6,14 @@ import VideoGallery from './Components/MyGallery/VideoGallery';
 import UserProfile from './Components/MyGallery/UserProfile';
 
 function App() {
-
+  
   return (
     <>
     <BrowserRouter>
         <Routes>
           <Route path='/' element={<LoginPage/>}></Route>
           <Route path='/signUp' element={<SignUp/>}></Route>
+          <Route path = "/signin" element = {<LoginPage/>}/>
           <Route path="/photoGallery" element={<PhotoGallery/>}></Route>
           <Route path="/videoGallery"  element={<VideoGallery/>}></Route>
           <Route path="/userProfile" element={<UserProfile/>}></Route>

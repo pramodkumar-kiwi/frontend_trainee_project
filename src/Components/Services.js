@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import { accessToken } from './Constants'
 
@@ -84,6 +85,5 @@ export const signOut_postData = async (data) => {
     const response = await axios.post(`${process.env.REACT_APP_API}/user/sign-out/`, {config,data});
     return response;
 }
-
-
+  
 

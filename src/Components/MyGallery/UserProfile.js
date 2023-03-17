@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './index.css'
@@ -7,7 +8,7 @@ import { accessToken, refreshToken } from '../Constants'
 import './Modal.css';
 
 const UserProfile = () => {
-
+  
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +17,11 @@ const UserProfile = () => {
 
   // This is to check whether user is authenticated
   useEffect(() => {
-    if (localStorage.getItem(refreshToken) === null || localStorage.getItem(accessToken) === null) {
-      navigate('/');
+    if (
+      localStorage.getItem(refreshToken) === null ||
+      localStorage.getItem(accessToken) === null
+    ) {
+      navigate("/");
     }
     userProfile_getData().then((response) => {
       console.log(response);
@@ -25,6 +29,7 @@ const UserProfile = () => {
       console.log(error);
     });
   });
+
 
 
   // This is to log-out the user and redirect to the log-in page 
@@ -44,27 +49,24 @@ const UserProfile = () => {
   };
 
 
-  const handleButtonClick = () => {
-    // Set the userId to the actual userId that you want to fetch from the API
-    setUserId("123");
-    setIsOpen(true);
-  };
+  return (
+    <>
+      <Navbar />
+      <div className="userProfile-container">
+        <button className="userProfile-myBtn">Change Password</button>
+        <button className="userProfile-myBtn">
+          Open User Profile
+        </button>
+        
+        <button className="userProfile-myBtn" >
+          Log Out
+        </button>
+      </div>
+    </>
+  );
+};
 
 
-  return (<>
-    <Navbar />
-
-    <div className='userProfile-container'>
-      <button className='userProfile-myBtn' onClick={handleButtonClick}>Change Password</button>
-      <button className='userProfile-myBtn'>Open User Profile</button>
-      <button className='userProfile-myBtn' onClick={handleLogOut}>Log Out</button>
-    </div>
-
-  </>
-  )
-}
 
 export default UserProfile
-
-
 

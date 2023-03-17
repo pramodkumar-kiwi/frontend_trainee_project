@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react'
 import './index.css'
 import Navbar from './Navbar'
@@ -8,13 +9,15 @@ import { accessToken, refreshToken } from '../Constants'
 
 
 const VideoGallery = () => {
-
   const navigate = useNavigate();
 
   // This is to check whether user is authenticated
   useEffect(() => {
-    if (localStorage.getItem(refreshToken) === null || localStorage.getItem(accessToken) === null) {
-      navigate('/');
+    if (
+      localStorage.getItem(refreshToken) === null ||
+      localStorage.getItem(accessToken) === null
+    ) {
+      navigate("/");
     }
   });
 

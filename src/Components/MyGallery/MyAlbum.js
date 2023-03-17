@@ -6,7 +6,7 @@ import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { BsInfoLg } from 'react-icons/bs';
 
-const MyAlbum = () => {
+const MyAlbum = ({ data }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -76,6 +76,11 @@ const MyAlbum = () => {
                       <div className="grid-item" key={ii}><img src={el["image"]} alt='House' height='100px' width='100px' /></div>
                     </>
                   }
+                  {data.image_gallery_set.length > 4 && (
+                    <span className="grid-gallery-number">
+                      +{data.image_gallery_set.length - 4}
+                    </span>
+                  )}
                 })} 
               </div>
 

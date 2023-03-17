@@ -17,7 +17,8 @@ import * as yup from "yup";
 import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
-import { emailRegExp,phoneRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE, PHONE_REQUIRE, PHONENO_INVALID, TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE } from '../Constants';
+// import { Signup_getdata } from '../Services'
+import { emailRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE,TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE, PHONE_REQUIRE, PHONENO_INVALID, phoneRegExp, userNameMessage,userNameRegex, passwordMessage,passwordRegex} from "../Constants";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,9 +26,10 @@ const SignUp = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+    
   };
 const validationSchema = yup.object({
-    firstName: yup
+    first_name: yup
       .string(F_NAME)
       .min(3,MIN_CHARACTER )
       .matches(
@@ -35,7 +37,7 @@ const validationSchema = yup.object({
         NAME_regex_message
       )
       .required(FIRST_NAME_REQUIRE),
-    lastName: yup
+    last_name: yup
       .string(ENTER_YOUR_LAST_NAME)
       .min(3,MIN_CHARACTER)
       .matches(
@@ -45,6 +47,7 @@ const validationSchema = yup.object({
       .required(LAST_NAME_IS_REQUIRED),
       username: yup
       .string(ENTER_YOUR_USERNAME)
+      .matches(userNameRegex,userNameMessage)
       .test(
           UNIQUE_USERNAME,
           USERNAME_ALREADY_USE,
@@ -54,16 +57,23 @@ const validationSchema = yup.object({
                       .string(ENTER_YOUR_USERNAME)
                       .required(USERNAME_IS_REQUIRED)
                       .min(8,USERNAME_LENGTH )
-                      .validate(value);
-                  const config = {
-                      headers: { "Content-Type": "application/json" },
-                  };
-                  const response = await axios.get(
-                      `https://30e4-182-74-85-106.in.ngrok.io/user/username-validator/0/?username=${value}`,
-                      config
-                  );
-                  console.log(response);
-                  return true;
+                      .validate(value);    
+              // Signup_getdata(value)
+              const config = {
+                headers: { "Content-Type": "application/json",
+                 "ngrok-skip-browser-warning":"237"
+               },
+            };
+            const response =  await axios.get(
+                `${process.env.REACT_APP_API}/user/username-validator/0/?username=${value}`,
+                config
+            );
+            if(response.status === 200){
+              return true;
+            }else{
+        
+            }
+            console.log(response);
               } catch (error) {
                   if (error?.response?.data?.username[0])
                       error.message = error.response.data.username[0];
@@ -87,12 +97,19 @@ const validationSchema = yup.object({
                       .email(ENTER_A_VALID_EMAIL)
                       .validate(value);
                   const config = {
-                      headers: { "Content-Type": "application/json" },
+                      headers: { "Content-Type": "application/json",
+                      "ngrok-skip-browser-warning":"237"
+                     },
                   };
                   const response = await axios.get(
-                    `https://30e4-182-74-85-106.in.ngrok.io/user/emailvalidator/0/?email=${value}`,
+                    `${process.env.REACT_APP_API}/user/emailvalidator/0/?email=${value}`,
                       config
                   );
+                  if(response.status === 200){
+                    return true;
+                  }else{
+              
+                  }
                   console.log(response);
                   return true;
               } catch (error) {
@@ -107,8 +124,10 @@ const validationSchema = yup.object({
     password: yup
       .string(ENTER_PASSWORD)
       .min(8,PASSWORD_LENGTH)
+      .matches(passwordRegex,passwordMessage)
       .required(PASSWORD_REQUIRE),
-    phone: yup
+      
+    contact: yup
       .string()
       .required(PHONE_REQUIRE)
       .matches(phoneRegExp,PHONENO_INVALID)
@@ -117,12 +136,12 @@ const validationSchema = yup.object({
   });
 
   const blankInitialValues = {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     username: "",
     email: "",
     password: "",
-    phone: "",
+    contact: "",
   };
 
   const formik = useFormik({
@@ -134,7 +153,9 @@ const validationSchema = yup.object({
         console.log(values);
         try {
             const config = {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: { "Content-Type": "multipart/form-data",
+                 "ngrok-skip-browser-warning":"237"
+               },
                
             };
             let formData = new FormData();
@@ -144,13 +165,15 @@ const validationSchema = yup.object({
             });
 
             const { data } = await axios.post(
-                `http://30e4-182-74-85-106.in.ngrok.io/user/signup/`,
+                `${process.env.REACT_APP_API}/user/signup/`,
                 formData,
                 config
             );
             console.log(data);
             localStorage.clear("signup_vals");
+
             navigate("/");
+            alert("Succesfull SignUp!");
         } catch (error) {
             console.log(error.response.status);
             if (error.response.status === 400) {
@@ -210,32 +233,32 @@ const validationSchema = yup.object({
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="first_name"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
-                value={formik.values.firstName}
+                value={formik.values.first_name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.firstName && formik.errors.firstName}
-                helperText={formik.touched.firstName && formik.errors.firstName}
+                error={formik.touched.first_name && formik.errors.first_name}
+                helperText={formik.touched.first_name && formik.errors.first_name}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 autoComplete="family-name"
-                value={formik.values.lastName}
+                value={formik.values.last_name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.lastName && formik.errors.lastName}
-                helperText={formik.touched.lastName && formik.errors.lastName}
+                error={formik.touched.last_name && formik.errors.last_name}
+                helperText={formik.touched.last_name && formik.errors.last_name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -304,15 +327,15 @@ const validationSchema = yup.object({
               <TextField
                 required
                 fullWidth
-                name="phone"
-                label="Phone"
+                name="contact"
+                label="Contact"
                 type="number"
-                id="phone"
-                autoComplete="phone"
-                value={formik.values.phone}
+                id="contact"
+                autoComplete="contact"
+                value={formik.values.contact}
                 onChange={formik.handleChange}
-                error={formik.touched.phone && formik.errors.phone}
-                helperText={formik.touched.phone && formik.errors.phone}
+                error={formik.touched.contact && formik.errors.contact}
+                helperText={formik.touched.contact && formik.errors.contact}
                 onBlur={formik.handleBlur}
               />
             </Grid>
@@ -329,7 +352,7 @@ const validationSchema = yup.object({
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Rlink to="/">
+              <Rlink to="/signin">
                 <Link variant="body2">Already have an account? Sign in</Link>
               </Rlink>
             </Grid>
