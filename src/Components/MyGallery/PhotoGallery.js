@@ -1,13 +1,21 @@
-import Modal from "./Modal";
-import React, { useEffect, useState } from "react";
-import "./index.css";
-import Navbar from "./Navbar";
-import Albums from "./Albums";
-import { useNavigate } from "react-router-dom";
-import { accessToken, refreshToken } from "../Constants";
+
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import './index.css'
+import Navbar from './Navbar'
+import Modal from './Modal'
+import Albums from './Albums'
+import { accessToken, refreshToken } from '../Constants'
+import {albumListing_getData} from '../Services'
 import axios from "axios";
 
+
 const PhotoGallery = () => {
+
+
+  const navigate = useNavigate();
+
+
   const [gallery, setGallery] = React.useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -58,8 +66,12 @@ const PhotoGallery = () => {
     }
   };
 
-  const navigate = useNavigate();
+  
 
+
+  
+
+  // This is to check whether user is authenticated
   useEffect(() => {
     if (
       localStorage.getItem(refreshToken) === null ||
@@ -69,7 +81,6 @@ const PhotoGallery = () => {
     } else {
       getImageGallery();
     }
-
   }, []);
 
 
@@ -77,12 +88,12 @@ const PhotoGallery = () => {
     <>
       <Navbar />
       <div className="photoGallery-container">
-        {gallery && <Albums gallery={gallery} />}
         <i
           className="fa
       -solid fa-plus add-icon-icon"
           onClick={handleOpenModal}
         ></i>
+        {gallery && <Albums gallery={gallery} />}
         {showModal && (
           <Modal
             handleClose={handleCloseModal}

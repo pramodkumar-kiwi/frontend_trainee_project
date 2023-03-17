@@ -1,7 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
 import './index.css'
+import { useNavigate, Link } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { signIn_postData } from '../Services';
 import { error } from '../Constants'
 
@@ -11,6 +11,7 @@ const LoginPage = () => {
     
     const [err, setErr] = useState(false);
 
+    /* This is to hide error message received after entering invalid credentials as soon as input fields are changed */
     const handleChange = () => {
         setErr(false);
     }
@@ -35,6 +36,7 @@ const LoginPage = () => {
                         return errors;
                     }}
 
+                    /* This is to submit the form and logging in the user with the correct credentials*/
                     onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(false);
                         signIn_postData({
@@ -42,10 +44,9 @@ const LoginPage = () => {
                             password: values.password
                         }).then((response) => {
                             setErr(false);
-                            
-                            localStorage.setItem("accessToken", response.access);
-                            localStorage.setItem("refreshToken", response.refresh);
-
+                            localStorage.setItem("accessToken", response.data.access);
+                            localStorage.setItem("refreshToken", response.data.refresh);
+                            console.log(response.data)
                             navigate("/photoGallery");
                         })
                             .catch((error) => {

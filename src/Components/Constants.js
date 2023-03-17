@@ -1,3 +1,4 @@
+
 export const emailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 export const phoneRegExp =
 /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -34,7 +35,6 @@ export const TOO_LONG="too long"
 
 
 
-
 export const error = "Invalid credentials!! Please try again.";
 
 export const accessToken = "accessToken";
@@ -42,8 +42,6 @@ export const refreshToken = "refreshToken";
 
 export const addAlbum = "ADD";
 export const updateAlbum = "SAVE";
-
-
 
 
   

@@ -1,16 +1,13 @@
 .myLogin-bg-img {
     z-index: 1;
-
     background-image: url("./alexander-andrews-vpm9z4BLgRY-unsplash.jpg");
     background-size: cover;
-
     height: 90vh;
     width: 80vw;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
 }
 
 .myLogin-heading {
@@ -33,7 +30,6 @@
 
 .myLogin_error_msg {
     color: red;
-    text-align: center;
 }
 
 .myLogin-form {
@@ -46,14 +42,10 @@
     max-width: 350px;
     min-height: 55%;
     padding: 16px;
-    /* background-color: white; */
-    /* background-color: rgba(255,255,255,0.75); */
     background-color: rgba(255,255,255,0.25);
     box-shadow: 0 8px 32px 0 rgba(23, 22, 22,0.57);
-
 }
 
-  
 .myLogin-inputs {
     width: 90%;
     padding: 15px;
@@ -76,8 +68,7 @@
     border: none;
     cursor: pointer;
     width: 100%;
-    margin: 22px 0 10px 0;
-    
+    margin: 22px 0 10px 0;   
 }
 
 .myLogin_btn:hover {
@@ -88,7 +79,6 @@
     margin-left: 10px;
     text-decoration: none;
     color: black;
-    
     font-size: 18px;
 }
 
