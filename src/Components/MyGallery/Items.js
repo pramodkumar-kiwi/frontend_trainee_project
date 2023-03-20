@@ -3,7 +3,7 @@ import { Paper } from '@mui/material'
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { ImageListing_deleteData } from '../Services'
 
-const Item = ({ item }) => {
+const Item = ({ item, getAllAlbumsData}) => {
 
   const handleDeleteImage = (itemID) => {
     ImageListing_deleteData(itemID)
@@ -13,6 +13,7 @@ const Item = ({ item }) => {
       .catch(error => {
         return error
       })
+
   }
 
   return (

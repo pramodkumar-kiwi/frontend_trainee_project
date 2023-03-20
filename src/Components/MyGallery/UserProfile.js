@@ -1,19 +1,13 @@
-
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './index.css'
 import Navbar from './Navbar'
-import { signOut_postData, userProfile_getData } from '../Services'
 import { accessToken, refreshToken } from '../Constants'
 import './Modal.css';
 
 const UserProfile = () => {
   
   const navigate = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const details = localStorage.getItem(refreshToken);
 
   // This is to check whether user is authenticated
   useEffect(() => {
@@ -23,11 +17,6 @@ const UserProfile = () => {
     ) {
       navigate("/");
     }
-    userProfile_getData().then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
   });
 
 
@@ -58,7 +47,7 @@ const UserProfile = () => {
           Open User Profile
         </button>
         
-        <button className="userProfile-myBtn" >
+        <button className="userProfile-myBtn" onClick={handleLogOut}>
           Log Out
         </button>
       </div>

@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './index.css'
 import Carousel_Slider from './Carousel';
-import { albumListing_getData, albumListing_deleteData } from '../Services'
+import { albumListing_deleteData } from '../Services'
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { BsInfoLg } from 'react-icons/bs';
 
-const MyAlbum = ({ data }) => {
+const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [myAlbumDetails, setMyAlbumDetails] = useState([]);
+  
   const [singleGalleryData, setSingleGalleryData] = useState([]);
 
-  // This is to get albums data from gallery API
-  const getAllAlbumsData = () => {
-    albumListing_getData()
-      .then((response) => {
-        setMyAlbumDetails(response.data);
-      })
-
-  }
-
-  useEffect(() => {
-    getAllAlbumsData();
-  }, [])
+  
+  
 
   // This is to close the slider
   const handleClosePreview = () => {
@@ -76,13 +66,15 @@ const MyAlbum = ({ data }) => {
                       <div className="grid-item" key={ii}><img src={el["image"]} alt='House' height='100px' width='100px' /></div>
                     </>
                   }
-                  {data.image_gallery_set.length > 4 && (
-                    <span className="grid-gallery-number">
-                      +{data.image_gallery_set.length - 4}
-                    </span>
-                  )}
                 })} 
               </div>
+
+              {/* else{
+                    <span className="grid-gallery-number">
+                    +{myAlbumDetails.image_gallery_set.length - 4}
+                  </span>
+                  } */}
+
 
               {/* <div className='gallery_crud'>
                   <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
@@ -101,7 +93,7 @@ const MyAlbum = ({ data }) => {
           <>
             <div className='drop-down'>
               <button onClick={handleClosePreview} title='Close Slider' className='preview-btn'>X</button>
-              <Carousel_Slider singleGalleryData={singleGalleryData[0]}/>
+              <Carousel_Slider singleGalleryData={singleGalleryData[0]} getAllAlbumsData={getAllAlbumsData}/>
             </div>
           </>
         )

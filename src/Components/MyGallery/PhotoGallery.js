@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './index.css'
@@ -12,20 +11,21 @@ import axios from "axios";
 
 const PhotoGallery = () => {
 
-
   const navigate = useNavigate();
 
-
-  const [gallery, setGallery] = React.useState([]);
+  // const [gallery, setGallery] = React.useState([]);
+  const [myAlbumDetails, setMyAlbumDetails] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => {
-    console.log("close >>>>>>")
     setShowModal(false);
   };
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
+
+
 
   // code for uploading the imagefile onto the server.
   const handleImageUpload = async (data) => {
@@ -45,32 +45,19 @@ const PhotoGallery = () => {
       config
     );
     console.log(addImage);
-    getImageGallery();
-  };
-  // uploaded picture will be shown with the help of this function
-  const getImageGallery = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem(accessToken)}`,
-        "ngrok-skip-browser-warning": "237",
-      },
-    };
-    const response = await axios.get(
-      `${process.env.REACT_APP_API}/gallery/image-gallery/`,
-      config
-    );
-    console.log(response);
-    if (response?.data.length > 0) {
-      setGallery(response.data);
-    }
+    getAllAlbumsData();
   };
 
+  // This is to get albums data from gallery API
+  const getAllAlbumsData = () => {
+    albumListing_getData()
+      .then((response) => {
+        setMyAlbumDetails(response.data);
+      })
+
+  }
+
   
-
-
-  
-
   // This is to check whether user is authenticated
   useEffect(() => {
     if (
@@ -78,10 +65,10 @@ const PhotoGallery = () => {
       localStorage.getItem(accessToken) === null
     ) {
       navigate("/");
-    } else {
-      getImageGallery();
+    }else{
+      getAllAlbumsData();
     }
-  }, []);
+  },[]);
 
 
   return (
@@ -93,11 +80,11 @@ const PhotoGallery = () => {
       -solid fa-plus add-icon-icon"
           onClick={handleOpenModal}
         ></i>
-        {gallery && <Albums gallery={gallery} />}
+        <Albums myAlbumDetails={myAlbumDetails} getAllAlbumsData={getAllAlbumsData} />
         {showModal && (
           <Modal
             handleClose={handleCloseModal}
-            getImageGallery={getImageGallery}
+            getAllAlbumsData={getAllAlbumsData}
             handleImageUpload={handleImageUpload}
           />
         )}

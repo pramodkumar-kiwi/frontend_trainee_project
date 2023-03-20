@@ -3,7 +3,7 @@ import "./Modal.css";
 import axios from "axios";
 import { accessToken } from "../Constants";
 
-const Modal = ({ handleClose, getImageGallery, handleImageUpload }) => {
+const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
   //states for file, and name
   const [files, setFile] = useState([]);
   const [galleryName, setGalleryName] = useState("");
@@ -49,7 +49,7 @@ const Modal = ({ handleClose, getImageGallery, handleImageUpload }) => {
       }
 
      setGalleryCreated(data);
-     getImageGallery();
+     getAllAlbumsData();
     } catch (error) {
       console.log(error);
       if (error?.response?.status === 400)
