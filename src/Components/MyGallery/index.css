@@ -6,29 +6,29 @@
 }
 
 .nav-buttons {
-  display: block;
-  background-color: rgb(40, 39, 39);
-  color: white;
-  text-align: center;
-  height: 100px;
-  width: 100%;
-  margin: auto;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: large;
+    display: block;
+    background-color: rgb(40, 39, 39);
+    color: white;
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: large;
 }
 
 .nav-buttons:hover {
-  background-color: #111;
+    background-color: #111;
 }
 
 .nav-btn-link {
-  text-decoration: none;
-  width: 33.33%;
+    text-decoration: none;
+    width: 33.33%;
 }
 
 .active {
-  background-color: #111;
+    background-color: #111;
 }
 
 /* <--------------------------------PHOTO GALLERY ---------------------------------> */
@@ -54,28 +54,30 @@
 }
 
 .add-icon-icon:hover {
-  background-color: #1d1d1d;
-  color: green;
+    background-color: #1d1d1d;
+    color: green;
 }
 
 /* <------------------------------ Sub-Component: ALBUMS ----------------------------> */
 .no-albums_text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 50px;
-  opacity: 0.5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    opacity: 0.5;
 }
 
 /* <------------------------------ Sub-Component: MY_ALBUMS ----------------------------> */
 
-.galleryHeading{
+.galleryHeading {
     text-align: center;
     margin: 0;
 }
 
-.del, .edit, .preview-gallery{
+.del,
+.edit,
+.preview-gallery {
     border: 1px solid black;
     padding: 2px;
     height: 20px;
@@ -84,12 +86,12 @@
     cursor: pointer;
 }
 
-.del:hover  {
+.del:hover {
     background-color: black;
     color: red;
 }
 
-.edit:hover{
+.edit:hover {
     background-color: black;
     color: green;
 }
@@ -145,7 +147,7 @@
     padding: 2rem;
     border-radius: 0 0 5px 5px;
     z-index: 5;
-    background: #FFF; 
+    background: #FFF;
 }
 
 .preview-btn {
@@ -173,7 +175,7 @@
     width: 500px;
 }
 
-.myItem-container{
+.myItem-container {
     display: flex;
     justify-content: center;
     z-index: -5;
@@ -209,40 +211,40 @@
 /* <--------------------------------USER PROFILE ---------------------------------> */
 
 .userProfile-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  position: absolute;
-  top: 40%;
-  left: 25%;
-  transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    transform: translate(-50%, -50%);
 }
 
 .userProfile-myBtn {
-  height: 35px;
-  width: 30%;
-  margin: 20px;
+    height: 35px;
+    width: 30%;
+    margin: 20px;
 }
 
 .grid-img {
-  width: 149px;
-  height: 149px;
-  object-fit: "cover";
+    width: 149px;
+    height: 149px;
+    object-fit: "cover";
 }
 
 .grid-gallery-number {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 149px;
-  width: 149px;
-  right: -5px;
-  bottom: -5px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    height: 100px;
+    width: 100px;
+    font-size: 20px;
+    position: relative;
+    bottom: 87%;
+    left: 101.5%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-

@@ -13,7 +13,6 @@ const PhotoGallery = () => {
 
   const navigate = useNavigate();
 
-  // const [gallery, setGallery] = React.useState([]);
   const [myAlbumDetails, setMyAlbumDetails] = useState([]);
   const [showModal, setShowModal] = useState(false);
 

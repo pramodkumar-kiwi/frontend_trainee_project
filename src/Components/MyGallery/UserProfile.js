@@ -25,16 +25,6 @@ const UserProfile = () => {
   const handleLogOut = () => {
     localStorage.clear();
     navigate('/');
-    // signOut_postData(details)
-    //   .then((response) => {
-    //     console.log(response);
-    //     console.log("THis");
-    //     localStorage.clear();
-    //     navigate('/');
-    //   }).catch((error) => {
-    //     console.log("err");
-    //     console.log(error);
-    //   });
   };
 
 
@@ -46,7 +36,6 @@ const UserProfile = () => {
         <button className="userProfile-myBtn">
           Open User Profile
         </button>
-        
         <button className="userProfile-myBtn" onClick={handleLogOut}>
           Log Out
         </button>

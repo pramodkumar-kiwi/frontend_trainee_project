@@ -42,6 +42,7 @@ export const refreshToken = "refreshToken";
 
 export const addAlbum = "ADD";
 export const updateAlbum = "SAVE";
+export const GALLERY_IMAGE_COUNT = 4;
 
 
   

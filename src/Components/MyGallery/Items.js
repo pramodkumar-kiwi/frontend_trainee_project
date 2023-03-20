@@ -3,18 +3,20 @@ import { Paper } from '@mui/material'
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { ImageListing_deleteData } from '../Services'
 
-const Item = ({ item, getAllAlbumsData}) => {
+const Item = ({ item, getAllAlbumsData, handlePreview}) => {
 
   const handleDeleteImage = (itemID) => {
     ImageListing_deleteData(itemID)
       .then(response => {
+        handlePreview()
+        getAllAlbumsData();
         return response;
       })
       .catch(error => {
         return error
       })
-
   }
+
 
   return (
     <Paper>
