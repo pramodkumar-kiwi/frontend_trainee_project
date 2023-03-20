@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
 import './index.css'
 import CarouselSlider from './Carousel';
-import Update from './Update';
-import { albumListing_deleteData } from '../Services'
+import { albumListing_deleteData, Gallery_putData } from '../Services'
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsFillPencilFill, BsInfoLg } from 'react-icons/bs';
 import { GALLERY_IMAGE_COUNT } from '../Constants'
 
-const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryCreated, setGalleryCreated, setGalleryName }) => {
+const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryName, setGalleryCreated, setGalleryName }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [singleGalleryData, setSingleGalleryData] = useState([]);
-  const [isgalleryCreated, setIsGalleryCreated] = useState(false);
+  const [isTitleEdit, setIsTitleEdit] = useState(true);
+  const [gName, setGName] = useState('')
+const [albumID, setAlbumID] = useState('');
+
 
   // This is to close the slider
   const handleClosePreview = () => {
@@ -43,13 +45,40 @@ const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryCrea
 
   }
 
-  const handleEditAlbum = (myGalleryName) => {
-    setIsGalleryCreated(true);
+  const handleEditAlbum = (myGalleryName, galleryID) => {
+    // console.log(galleryID);
+    setAlbumID(galleryID);
+    setGalleryName(myGalleryName)
     setIsEditOpen(!isEditOpen);
+    setIsTitleEdit(!isTitleEdit);
   }
 
-  const handleClose = () => {
+  const galleryNameEdit = (e) => {
+    setGalleryName(e.target.value);
+  }
+
+  const handleEditClose = () => {
+    getAllAlbumsData();
+    setIsTitleEdit(!isTitleEdit);
     setIsEditOpen(!isEditOpen);
+
+  }
+
+  const handleEditClick = async (galleryID) => {
+ 
+    await Gallery_putData(galleryID, {
+      gallery_name: galleryName
+    }).then((response) => {
+      setIsEditOpen(!isEditOpen);
+      getAllAlbumsData();  
+      return response.data;
+    })
+    .catch((error) => {
+      return error;
+    })
+
+    
+   
   }
 
   return (
@@ -57,11 +86,12 @@ const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryCrea
       {
 
         myAlbumDetails.map((detail, i) => {
-          return <div className='container' key={i} >
 
+          return <div className='container' key={i} >
+            
             <h3 className='galleryHeading'>{detail["gallery_name"]}
               <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
-              <BsFillPencilFill className='edit' title='Edit Your Album'  />
+              <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleEditAlbum(detail["gallery_name"], detail["id"])} />
               <BsInfoLg className='preview-gallery' title='Preview Your Album' onClick={() => handlePreview(detail["gallery_name"])} />
             </h3>
 
@@ -95,14 +125,26 @@ const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryCrea
           </>
         )
       }
+{
+              isEditOpen && (
+                <>
+                  <div className="modal">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h3>GALLERY NAME:</h3>
+                        <h4>{isTitleEdit ? <input value={galleryName} onChange={galleryNameEdit} /> : <h3>{galleryName}</h3>}<BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => setIsTitleEdit(!isTitleEdit)} /></h4>
+                      </div>
+                      <div className="modal-footer">
+                        <button onClick={handleEditClose}>Cancel</button>
+                        <button onClick={() => handleEditClick(albumID)}>Save</button>
 
-      {
-        isEditOpen && (
-          <>
-            <Update handleClose={handleClose} />
-          </>
-        )
-      }
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )
+            }
+
 
     </>
   )

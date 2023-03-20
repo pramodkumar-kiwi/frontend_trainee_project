@@ -12,7 +12,7 @@ const config = {
 
 export const Gallery_putData = async (id, data) => {
 
-    const response = await axios.put(`${process.env.REACT_APP_API}/gallery/image-gallery/${id}/`, config, data);
+    const response = await axios.put(`${process.env.REACT_APP_API}/gallery/image-gallery/${id}/`, data , config) ;
 
     if (response.status === 200) {
         return response;

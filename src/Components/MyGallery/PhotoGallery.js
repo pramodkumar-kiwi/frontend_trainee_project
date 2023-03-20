@@ -4,13 +4,14 @@ import './index.css'
 import Navbar from './Navbar'
 import Modal from './Modal'
 import Albums from './Albums'
-import { accessToken, refreshToken } from '../Constants'
+import { accessToken, IMAGE_GALLERY_CREATED, refreshToken } from '../Constants'
 import {albumListing_getData} from '../Services'
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PhotoGallery = () => {
-
+  const notify = () => toast(IMAGE_GALLERY_CREATED);
   const navigate = useNavigate();
 
   const [myAlbumDetails, setMyAlbumDetails] = useState([]);
@@ -21,7 +22,6 @@ const PhotoGallery = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    getAllAlbumsData();
   };
 
   const handleOpenModal = () => {
@@ -32,6 +32,7 @@ const PhotoGallery = () => {
 
   // code for uploading the imagefile onto the server.
   const handleImageUpload = async (data) => {
+    try{
     const formData = new FormData();
     data.file.map((val) => formData.append("image", val));
     formData.append("image_gallery_id", data.galleryId);
@@ -48,7 +49,17 @@ const PhotoGallery = () => {
       config
     );
     console.log(addImage);
+    notify();
+    setGalleryCreated(false);
+    setGalleryName("");
+    setFile([]);
     getAllAlbumsData();
+    }
+   catch(error){
+    console.log(error);
+    if (error?.response?.status === 400)
+        alert(error?.response?.data?.image[0]);
+   }
   };
 
   // This is to get albums data from gallery API
@@ -84,7 +95,7 @@ const PhotoGallery = () => {
           onClick={handleOpenModal}
         ></i>
         <Albums myAlbumDetails={myAlbumDetails} galleryCreated={galleryCreated} getAllAlbumsData={getAllAlbumsData} setShowModal={setShowModal} 
-            setGalleryCreated={setGalleryCreated} setGalleryName={setGalleryName} setFile={setFile} files={files}/>
+            setGalleryCreated={setGalleryCreated} galleryName={galleryName} setGalleryName={setGalleryName} setFile={setFile} files={files}/>
         {showModal && (
           <Modal
             handleClose={handleCloseModal}
@@ -97,6 +108,7 @@ const PhotoGallery = () => {
             setFile={setFile} files={files}
           />
         )}
+          <ToastContainer />
       </div>
     </>
   );

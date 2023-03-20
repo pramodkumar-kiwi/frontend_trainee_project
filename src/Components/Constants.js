@@ -31,8 +31,9 @@ export const PHONE_REQUIRE="Phone number is required"
 export const PHONENO_INVALID="Phone number is not valid"
 export const TOO_SHORT="too short"
 export const TOO_LONG="too long"
-
-
+export const IMAGE_GALLERY_CREATED = "Image Gallery Created"
+export const IMAGE_FILE_LENGTH = 10
+export const IMAGE_lENGTH="You can select up to 10 images only"
 
 
 export const error = "Invalid credentials!! Please try again.";

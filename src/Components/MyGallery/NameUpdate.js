@@ -4,9 +4,8 @@ import axios from "axios";
 import { accessToken, IMAGE_FILE_LENGTH, IMAGE_lENGTH } from "../Constants";
 
 
-const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAllAlbumsData, handleImageUpload, galleryCreated, setGalleryCreated}) => {
-  //states for file, and name
-  
+const NameUpdate = ({setFile, files, setGalleryName, galleryName, handleClose, getAllAlbumsData, handleImageUpload, galleryCreated, setGalleryCreated}) => {
+ 
   const handleNameChange = (event) => {
     if (!galleryCreated) setGalleryName(event.target.value);
   };
@@ -157,4 +156,7 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
     </div>
   );
 };
-export default Modal;
+
+
+
+export default NameUpdate
