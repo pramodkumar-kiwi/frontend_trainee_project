@@ -29,6 +29,7 @@ const PhotoGallery = () => {
 
   // code for uploading the imagefile onto the server.
   const handleImageUpload = async (data) => {
+    try{
     const formData = new FormData();
     data.file.map((val) => formData.append("image", val));
     formData.append("image_gallery_id", data.galleryId);
@@ -46,6 +47,12 @@ const PhotoGallery = () => {
     );
     console.log(addImage);
     getAllAlbumsData();
+    }
+   catch(error){
+    console.log(error);
+    if (error?.response?.status === 400)
+        alert(error?.response?.data?.image[0]);
+   }
   };
 
   // This is to get albums data from gallery API

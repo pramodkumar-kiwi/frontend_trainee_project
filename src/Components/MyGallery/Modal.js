@@ -51,7 +51,6 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
       if (data?.message) {
         alert(data.message);
       }
-
      setGalleryCreated(data);
      getAllAlbumsData();
     } catch (error) {
