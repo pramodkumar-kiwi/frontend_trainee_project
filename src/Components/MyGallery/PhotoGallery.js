@@ -15,9 +15,13 @@ const PhotoGallery = () => {
 
   const [myAlbumDetails, setMyAlbumDetails] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [galleryCreated, setGalleryCreated] = useState(false);
+  const [galleryName, setGalleryName] = useState("");
+  const [files, setFile] = useState([]);
 
   const handleCloseModal = () => {
     setShowModal(false);
+    getAllAlbumsData();
   };
 
   const handleOpenModal = () => {
@@ -79,12 +83,18 @@ const PhotoGallery = () => {
       -solid fa-plus add-icon-icon"
           onClick={handleOpenModal}
         ></i>
-        <Albums myAlbumDetails={myAlbumDetails} getAllAlbumsData={getAllAlbumsData} />
+        <Albums myAlbumDetails={myAlbumDetails} galleryCreated={galleryCreated} getAllAlbumsData={getAllAlbumsData} setShowModal={setShowModal} 
+            setGalleryCreated={setGalleryCreated} setGalleryName={setGalleryName} setFile={setFile} files={files}/>
         {showModal && (
           <Modal
             handleClose={handleCloseModal}
             getAllAlbumsData={getAllAlbumsData}
             handleImageUpload={handleImageUpload}
+            galleryCreated={galleryCreated}
+            setGalleryCreated={setGalleryCreated}
+            galleryName={galleryName}
+            setGalleryName={setGalleryName}
+            setFile={setFile} files={files}
           />
         )}
       </div>

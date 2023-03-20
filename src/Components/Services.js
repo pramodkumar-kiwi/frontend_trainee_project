@@ -10,6 +10,18 @@ const config = {
     }
 };
 
+export const Gallery_putData = async (id, data) => {
+
+    const response = await axios.put(`${process.env.REACT_APP_API}/gallery/image-gallery/${id}/`, config, data);
+
+    if (response.status === 200) {
+        return response;
+    } else {
+        console.log("Something went wrong!!");
+    }
+}
+
+
 export const ImageListing_deleteData = async (data) => {
 
     const response = await axios.delete(`${process.env.REACT_APP_API}/gallery/images/${data}/`, config);
@@ -42,7 +54,6 @@ export const albumListing_getData = async (data) => {
     } else {
         console.log("Something went wrong!!");
     }
-
 }
 
 

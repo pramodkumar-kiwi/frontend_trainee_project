@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "./Modal.css";
 import axios from "axios";
+import { BsFillPencilFill, BsInfoLg } from 'react-icons/bs';
 import { accessToken } from "../Constants";
 
-const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
+const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAllAlbumsData, handleImageUpload, galleryCreated, setGalleryCreated}) => {
   //states for file, and name
-  const [files, setFile] = useState([]);
-  const [galleryName, setGalleryName] = useState("");
-  const [galleryCreated, setGalleryCreated] = useState(false);
-
+  
   const handleNameChange = (event) => {
     if (!galleryCreated) setGalleryName(event.target.value);
   };
@@ -17,6 +15,10 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
     console.log(e.target.files);
     const imageFiles = e.target.files;
     const images = [];
+    if (imageFiles.length > 10) {
+      alert("You can select up to 10 images only");
+      return;
+    }
     for (let i = 0; i < imageFiles.length; i++) {
       images.push(imageFiles[i]);
     }
@@ -90,73 +92,76 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
 
   return (
     <div className="modal">
+       
       <div className="modal-content">
-        <form>
-          <label htmlFor="galleryName">Name:</label>
-          <input
-            type="text"
-            id="galleryName"
-            name="galleryName"
-            value={galleryName}
-            onChange={handleNameChange}
-          />
-
-          <button
-            className="button_Create_gallery"
-            onClick={(e) => createImageGallery(e)}
-            disabled={galleryCreated}
-          >
-            Create Gallery
-          </button>
-        </form>
-
-        <>
-          {galleryCreated && (
-            <>
-              <div className="modal-header">
-                <h3>Upload Image</h3>
+      <button className="modal-close-btn" onClick={() => handleClose()}>
+        X
+        </button>
+        {galleryCreated ? (
+          <>
+            <div className="modal-header">
+            <h2>GALLERY NAME:</h2><h3>{galleryName}</h3> 
+            </div>
+  
+            <div className="modal-body">
+              <div className="preview-images">
+                {files.length > 0 &&
+                  files.map((val, ind) => (
+                    <div key={ind} className="preview">
+                      
+                      <button onClick={() => removeImage(val)}>
+                        {" "}
+                        Delete{" "}
+                      </button>
+                      <img
+                        src={URL.createObjectURL(val)}
+                        alt="Preview"
+                        className="grid-img"
+                      />
+                    </div>
+                  ))}
               </div>
-
-              <div className="modal-body">
-                <div className="preview-images">
-                  {files.length > 0 &&
-                    files.map((val, ind) => (
-                      <div key={ind} className="preview">
-                        
-                        <button onClick={() => removeImage(val)}>
-                          {" "}
-                          Delete{" "}
-                        </button>
-                        <img
-                          src={URL.createObjectURL(val)}
-                          alt="Preview"
-                          className="grid-img"
-                        />
-                      </div>
-                    ))}
-                </div>
-                <div className="drag-and-drop" onDrop={handleDrop}>
-                  <p>Drag and drop an image file here or click to browse.</p>
-                  <input
-                    accept="image/*"
-                    type="file"
-                    onChange={handleFiles}
-                    multiple
-                  />
-                </div>
+              <div className="drag-and-drop" onDrop={handleDrop}>
+                <p>Drag and drop an image file here or click to browse.</p>
+                <input
+                  accept="image/*"
+                  type="file"
+                  onChange={handleFiles}
+                  multiple
+                />
               </div>
-            </>
-          )}
-          <div className="modal-footer">
-            <button onClick={() => handleClose()}>Cancel</button>
-            {galleryCreated && (
-              <button onClick={() => handleUploadClick()}>Upload</button>
-            )}
-          </div>
-        </>
+            </div>
+  
+            <div className="modal-footer">
+              <button onClick={() => handleClose()}>Cancel</button>
+              {galleryCreated && (
+                <button onClick={() => handleUploadClick()}>Upload</button>
+              )}
+            </div>
+          </>
+        ) : (
+          <form>
+            <label htmlFor="galleryName">Name: </label>
+            <input
+              type="text"
+              id="galleryName"
+              name="galleryName"
+              value={galleryName}
+              onChange={handleNameChange}
+            />
+  
+            <button
+              className="button_Create_gallery"
+              onClick={(e) => createImageGallery(e)}
+              disabled={galleryCreated}
+            >
+              Create Gallery
+            </button>
+          </form>
+        )}
+  
       </div>
     </div>
   );
 };
-
 export default Modal;

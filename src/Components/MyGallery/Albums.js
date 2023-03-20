@@ -2,11 +2,12 @@ import React from "react";
 import "./index.css";
 import MyAlbum from "./MyAlbum";
 
-const Albums = ({ myAlbumDetails, getAllAlbumsData }) => {
+const Albums = ({ files, setFile , myAlbumDetails, galleryCreated, getAllAlbumsData, setShowModal, setGalleryCreated, setGalleryName}) => {
   return (
     <div>
       {
-        myAlbumDetails.length > 0 ? <MyAlbum myAlbumDetails={myAlbumDetails} getAllAlbumsData={getAllAlbumsData}/> : <p className="no-albums_text">No Albums Found</p>
+        myAlbumDetails.length > 0 ? <MyAlbum setFile={setFile} files={files}
+        setGalleryCreated={setGalleryCreated} galleryCreated={galleryCreated}  setGalleryName={setGalleryName} setShowModal={setShowModal} myAlbumDetails={myAlbumDetails} getAllAlbumsData={getAllAlbumsData}/> : <p className="no-albums_text">No Albums Found</p>
       }
     </div>
   );

@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import './index.css'
 import CarouselSlider from './Carousel';
+import Update from './Update';
 import { albumListing_deleteData } from '../Services'
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsFillPencilFill, BsInfoLg } from 'react-icons/bs';
 import { GALLERY_IMAGE_COUNT } from '../Constants'
 
-const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
-
+const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryCreated, setGalleryCreated, setGalleryName }) => {
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [singleGalleryData, setSingleGalleryData] = useState([]);
+  const [isgalleryCreated, setIsGalleryCreated] = useState(false);
 
   // This is to close the slider
   const handleClosePreview = () => {
@@ -27,16 +29,27 @@ const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
 
   // This is to delete whole album from gallery API
   const handleDeleteAlbum = (galleryID) => {
-    albumListing_deleteData(galleryID)
-      .then((response) => {
-        return response;
-      }).then(() => {
-        getAllAlbumsData();
-      })
-      .catch(error => {
-        return error;
-      });
+    if (window.confirm("Are you sure you want to delete this Album?")) {
+      albumListing_deleteData(galleryID)
+        .then((response) => {
+          return response;
+        }).then(() => {
+          getAllAlbumsData();
+        })
+        .catch(error => {
+          return error;
+        });
+    }
 
+  }
+
+  const handleEditAlbum = (myGalleryName) => {
+    setIsGalleryCreated(true);
+    setIsEditOpen(!isEditOpen);
+  }
+
+  const handleClose = () => {
+    setIsEditOpen(!isEditOpen);
   }
 
   return (
@@ -48,7 +61,7 @@ const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
 
             <h3 className='galleryHeading'>{detail["gallery_name"]}
               <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
-              <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
+              <BsFillPencilFill className='edit' title='Edit Your Album'  />
               <BsInfoLg className='preview-gallery' title='Preview Your Album' onClick={() => handlePreview(detail["gallery_name"])} />
             </h3>
 
@@ -77,11 +90,20 @@ const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
           <>
             <div className='drop-down'>
               <button onClick={handleClosePreview} title='Close Slider' className='preview-btn'>X</button>
-              <CarouselSlider singleGalleryData={singleGalleryData[0]} getAllAlbumsData={getAllAlbumsData} handlePreview ={handlePreview}/>
+              <CarouselSlider singleGalleryData={singleGalleryData[0]} getAllAlbumsData={getAllAlbumsData} handlePreview={handlePreview} />
             </div>
           </>
         )
       }
+
+      {
+        isEditOpen && (
+          <>
+            <Update handleClose={handleClose} />
+          </>
+        )
+      }
+
     </>
   )
 }

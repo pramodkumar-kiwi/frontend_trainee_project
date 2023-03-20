@@ -6,6 +6,7 @@ import { ImageListing_deleteData } from '../Services'
 const Item = ({ item, getAllAlbumsData, handlePreview}) => {
 
   const handleDeleteImage = (itemID) => {
+    if (window.confirm("Are you sure you want to delete this Image?")) {
     ImageListing_deleteData(itemID)
       .then(response => {
         handlePreview()
@@ -15,6 +16,7 @@ const Item = ({ item, getAllAlbumsData, handlePreview}) => {
       .catch(error => {
         return error
       })
+    }
   }
 
 
