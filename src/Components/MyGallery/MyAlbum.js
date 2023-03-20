@@ -9,12 +9,7 @@ import { BsInfoLg } from 'react-icons/bs';
 const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
 
   const [isOpen, setIsOpen] = useState(false);
-
-  
   const [singleGalleryData, setSingleGalleryData] = useState([]);
-
-  
-  
 
   // This is to close the slider
   const handleClosePreview = () => {

@@ -4,13 +4,14 @@ import './index.css'
 import Navbar from './Navbar'
 import Modal from './Modal'
 import Albums from './Albums'
-import { accessToken, refreshToken } from '../Constants'
+import { accessToken, IMAGE_GALLERY_CREATED, refreshToken } from '../Constants'
 import {albumListing_getData} from '../Services'
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PhotoGallery = () => {
-
+  const notify = () => toast(IMAGE_GALLERY_CREATED);
   const navigate = useNavigate();
 
   // const [gallery, setGallery] = React.useState([]);
@@ -46,6 +47,7 @@ const PhotoGallery = () => {
       config
     );
     console.log(addImage);
+    notify();
     getAllAlbumsData();
     }
    catch(error){
@@ -95,6 +97,7 @@ const PhotoGallery = () => {
             handleImageUpload={handleImageUpload}
           />
         )}
+          <ToastContainer />
       </div>
     </>
   );

@@ -31,6 +31,7 @@ export const PHONE_REQUIRE="Phone number is required"
 export const PHONENO_INVALID="Phone number is not valid"
 export const TOO_SHORT="too short"
 export const TOO_LONG="too long"
+export const IMAGE_GALLERY_CREATED = "Image Gallery Created"
 
 
 
