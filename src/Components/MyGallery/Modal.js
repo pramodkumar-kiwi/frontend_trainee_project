@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Modal.css";
 import axios from "axios";
-import { accessToken } from "../Constants";
+import { accessToken, IMAGE_FILE_LENGTH, IMAGE_lENGTH } from "../Constants";
 
 const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
   //states for file, and name
@@ -17,8 +17,8 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
     console.log(e.target.files);
     const imageFiles = e.target.files;
     const images = [];
-    if (imageFiles.length > 10) {
-      alert("You can select up to 10 images only");
+    if (imageFiles.length > IMAGE_FILE_LENGTH) {
+      alert(IMAGE_lENGTH);
       return;
     }
     for (let i = 0; i < imageFiles.length; i++) {
@@ -29,8 +29,8 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
   };
   // code for creating a photo gallery
   const createImageGallery = async (event) => {
-     event.preventDefault();
-    console.log("called")
+    event.preventDefault();
+    console.log("called");
     try {
       const config = {
         headers: {
@@ -51,8 +51,8 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
       if (data?.message) {
         alert(data.message);
       }
-     setGalleryCreated(data);
-     getAllAlbumsData();
+      setGalleryCreated(data);
+      getAllAlbumsData();
     } catch (error) {
       console.log(error);
       if (error?.response?.status === 400)
@@ -78,7 +78,6 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
 
   // function for "Upload" button.If a file has been selected, it calls the handleUpload function passed in as a prop with the selected file and then calls the handleClose function to close the modal.
   const handleUploadClick = async () => {
-
     if (files) {
       const data = { galleryId: galleryCreated.data.id, file: files };
       await handleImageUpload(data);
@@ -93,27 +92,23 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
 
   return (
     <div className="modal">
-       
       <div className="modal-content">
-      <button className="modal-close-btn" onClick={() => handleClose()}>
-        X
+        <button className="modal-close-btn" onClick={() => handleClose()}>
+          X
         </button>
         {galleryCreated ? (
           <>
             <div className="modal-header">
-            <h2>GALLERY NAME:</h2><h3>{galleryName}</h3>
+              <h2>GALLERY NAME:</h2>
+              <h3>{galleryName}</h3>
             </div>
-  
+
             <div className="modal-body">
               <div className="preview-images">
                 {files.length > 0 &&
                   files.map((val, ind) => (
                     <div key={ind} className="preview">
-                      
-                      <button onClick={() => removeImage(val)}>
-                        {" "}
-                        Delete{" "}
-                      </button>
+                      <button onClick={() => removeImage(val)}> Delete </button>
                       <img
                         src={URL.createObjectURL(val)}
                         alt="Preview"
@@ -132,7 +127,7 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
                 />
               </div>
             </div>
-  
+
             <div className="modal-footer">
               <button onClick={() => handleClose()}>Cancel</button>
               {galleryCreated && (
@@ -150,7 +145,7 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
               value={galleryName}
               onChange={handleNameChange}
             />
-  
+
             <button
               className="button_Create_gallery"
               onClick={(e) => createImageGallery(e)}
@@ -160,7 +155,6 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
             </button>
           </form>
         )}
-  
       </div>
     </div>
   );
