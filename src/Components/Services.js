@@ -10,8 +10,14 @@ const config = {
     }
 };
 
+const configg = {
+    headers: {
+        "ngrok-skip-browser-warning": "237"
+    }
+};
+
 export const forgotPassword_postData = async (data) => {
-    const response = await axios.post(`${process.env.REACT_APP_API}`, data);
+    const response = await axios.post(`${process.env.REACT_APP_API}/user/forget_password/`, data, configg);
     if (response.status === 200) {
         return response;
     }

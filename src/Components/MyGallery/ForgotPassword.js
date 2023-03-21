@@ -5,14 +5,12 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import {emailRegExp,EMAIL_REGEX_VALDATION_MESSAGE} from '../Constants';
-
-
-
-
+import { emailRegExp, EMAIL_REGEX_VALDATION_MESSAGE } from '../Constants';
+import { forgotPassword_postData } from '../Services'
 
 
 const ForgotPassword = () => {
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
@@ -30,24 +28,20 @@ const ForgotPassword = () => {
 
     // Send API request to reset password
     setIsResettingPassword(true);
-    try {
-      const response = await fetch("API", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
+    forgotPassword_postData({
+      email: email,
+    })
+      .then((response) => {
+        setResetPasswordSuccess(true);
+        setResetPasswordError(null);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        setIsResettingPassword(false)
+        setResetPasswordSuccess(false);
+        setResetPasswordError(error.message);
+        console.log(error.data);
       });
-      const data = await response.json();
-      setResetPasswordSuccess(true);
-      setResetPasswordError(null);
-    } catch (error) {
-      setResetPasswordSuccess(false);
-      setResetPasswordError(error.message);
-    } finally {
-      setIsResettingPassword(false);
-    }
-    // Clear email input
     setEmail("");
   };
 
@@ -58,62 +52,62 @@ const ForgotPassword = () => {
 
   return (
     <div className='forgotPass'>
-    <div className="card">
-      <div className="card-header">
-        <h2 className="card-title">Forgot Your Password?</h2>
-      </div>
-      <div className="card-body">
-        <Typography sx={{ mt: 1, mb: 2 }}>
-          No worries, we got you covered.
-          Enter your email below and we'll send you a link to reset your password.
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              type="email"
-              name="email"
-              autoComplete="email"
-              value={email}
-              onChange={handleEmailChange}
-              error={emailError}
-              helperText={emailError && EMAIL_REGEX_VALDATION_MESSAGE}
-            />
-          </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 1 }}
-            disabled={isResettingPassword}
-          >
-            {isResettingPassword ? "Resetting Password..." : "Reset Password"}
-          </Button>
-          <Button
+      <div className="card">
+        <div className="card-header">
+          <h2 className="card-title">Forgot Your Password?</h2>
+        </div>
+        <div className="card-body">
+          <Typography sx={{ mt: 1, mb: 2 }}>
+            No worries, we got you covered.
+            Enter your email below and we'll send you a link to reset your password.
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                type="email"
+                name="email"
+                autoComplete="email"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailError}
+                helperText={emailError && EMAIL_REGEX_VALDATION_MESSAGE}
+              />
+            </Grid>
+            <Button
+              type='submit'
               fullWidth
               variant="contained"
-              sx={{ mt: 1, mb: 2}}
+              sx={{ mt: 3, mb: 1 }}
+              disabled={isResettingPassword}
+            >
+              {isResettingPassword ? "Resetting Password..." : "Reset Password"}
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 1, mb: 2 }}
 
             ><Link to="/" className='link_Login'>
-              Back to Login</Link>
+                Back to Login</Link>
             </Button>
-          
-          {resetPasswordSuccess && (
-            <Typography color="success">
-              Password reset link has been sent to your email address.
-            </Typography>
-          )}
-          {resetPasswordError && (
-            <Typography color="error">
-              Error resetting password: {resetPasswordError}
-            </Typography>
-          )}
-        </form>
+
+            {resetPasswordSuccess && (
+              <Typography color="success">
+                Password reset link has been sent to your email address.
+              </Typography>
+            )}
+            {resetPasswordError && (
+              <Typography color="error">
+                Error resetting password: {resetPasswordError}
+              </Typography>
+            )}
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
