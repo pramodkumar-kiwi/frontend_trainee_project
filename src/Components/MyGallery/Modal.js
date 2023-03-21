@@ -71,8 +71,8 @@ const Modal = ({ handleClose, getAllAlbumsData, handleImageUpload }) => {
     event.stopPropagation();
     if (galleryCreated) {
       const { files } = event.dataTransfer;
-      if (files && files.length > 0) {
-        //handleFiles(files)
+      if ( files.length > 0) {
+        handleFiles(files)
       }
     }
   };

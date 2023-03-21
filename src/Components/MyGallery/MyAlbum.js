@@ -1,67 +1,91 @@
-import React, { useState } from 'react'
-import './index.css'
-import Carousel_Slider from './Carousel';
-import { albumListing_deleteData } from '../Services'
-import { RiDeleteBinFill } from 'react-icons/ri';
-import { BsFillPencilFill } from 'react-icons/bs';
-import { BsInfoLg } from 'react-icons/bs';
+import React, { useState } from "react";
+import "./index.css";
+import Carousel_Slider from "./Carousel";
+import { albumListing_deleteData } from "../Services";
+import { RiDeleteBinFill } from "react-icons/ri";
+import { BsFillPencilFill } from "react-icons/bs";
+import { BsInfoLg } from "react-icons/bs";
 
 const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [singleGalleryData, setSingleGalleryData] = useState([]);
 
   // This is to close the slider
   const handleClosePreview = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   // This is to open the slider of a particular gallery
   const handlePreview = (galleryName) => {
-    const filterData = myAlbumDetails.filter((item) => item.gallery_name === galleryName)
+    const filterData = myAlbumDetails.filter(
+      (item) => item.gallery_name === galleryName
+    );
     console.log(filterData);
     setSingleGalleryData(filterData);
     setIsOpen(!isOpen);
-    window.scrollTo({ top: 0, behavior: 'smooth', });
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // This is to delete whole album from gallery API
   const handleDeleteAlbum = (galleryID) => {
     albumListing_deleteData(galleryID)
       .then((response) => {
         return response;
-      }).then(() => {
+      })
+      .then(() => {
         getAllAlbumsData();
       })
-      .catch(error => {
+      .catch((error) => {
         return error;
       });
-      
-  }
+  };
 
   return (
     <>
-      {
-
-        myAlbumDetails.map((detail, i) => {
-          return <div className='container' key={i} >
-
-            <h3 className='galleryHeading'>{detail["gallery_name"]}
-            <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
-                  <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
-                  <BsInfoLg className='preview-gallery' title='Preview Your Album' onClick={() => handlePreview(detail["gallery_name"])} />
+      {myAlbumDetails.map((detail, i) => {
+        return (
+          <div className="container" key={i}>
+            <h3 className="galleryHeading">
+              {detail["gallery_name"]}
+              <RiDeleteBinFill
+                className="del"
+                title="Delete Your Album"
+                onClick={() => handleDeleteAlbum(detail["id"])}
+              />
+              <BsFillPencilFill
+                className="edit"
+                title="Edit Your Album"
+                onClick={() => handleDeleteAlbum(detail["id"])}
+              />
+              <BsInfoLg
+                className="preview-gallery"
+                title="Preview Your Album"
+                onClick={() => handlePreview(detail["gallery_name"])}
+              />
             </h3>
 
-            <div className='slide-show' title="Click to preview" onClick={() => handlePreview(detail["gallery_name"])}>
-
+            <div
+              className="slide-show"
+              title="Click to preview"
+              onClick={() => handlePreview(detail["gallery_name"])}
+            >
               <div className="grid-container">
                 {detail.image_gallery_set.map((el, ii) => {
                   if (ii < 4) {
-                    return <>
-                      <div className="grid-item" key={ii}><img src={el["image"]} alt='House' height='100px' width='100px' /></div>
-                    </>
+                    return (
+                      <>
+                        <div className="grid-item" key={ii}>
+                          <img
+                            src={el["image"]}
+                            alt="House"
+                            height="100px"
+                            width="100px"
+                          />
+                        </div>
+                      </>
+                    );
                   }
-                })} 
+                })}
               </div>
 
               {/* else{
@@ -70,43 +94,46 @@ const MyAlbum = ({ myAlbumDetails, getAllAlbumsData }) => {
                   </span>
                   } */}
 
-
               {/* <div className='gallery_crud'>
                   <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
                   <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
                   <BsInfoLg className='preview-gallery' title='Preview Your Album' onClick={() => handlePreview(detail["gallery_name"])} />
                 </div> */}
             </div>
-            
           </div>
-        })
-      }
+        );
+      })}
 
-
-      {
-        isOpen && (
-          <>
-            <div className='drop-down'>
-              <button onClick={handleClosePreview} title='Close Slider' className='preview-btn'>X</button>
-              <Carousel_Slider singleGalleryData={singleGalleryData[0]} getAllAlbumsData={getAllAlbumsData}/>
-            </div>
-          </>
-        )
-      }
+      {isOpen && (
+        <>
+          <div className="drop-down">
+            <button
+              onClick={handleClosePreview}
+              title="Close Slider"
+              className="preview-btn"
+            >
+              X
+            </button>
+            <Carousel_Slider
+              singleGalleryData={singleGalleryData[0]}
+              getAllAlbumsData={getAllAlbumsData}
+            />
+          </div>
+        </>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default MyAlbum
+export default MyAlbum;
 
-
-  // const handlePreview = (galleryID) => {
-  //   imageListing_getData(galleryID)
-  //     .then(response => {
-  //       const res = response.data;
-  //       setSingleGalleryData(res);
-  //       console.log(res);
-  //     }).catch(error => {
-  //       console.log(error);
-  //     });
-  // }
+// const handlePreview = (galleryID) => {
+//   imageListing_getData(galleryID)
+//     .then(response => {
+//       const res = response.data;
+//       setSingleGalleryData(res);
+//       console.log(res);
+//     }).catch(error => {
+//       console.log(error);
+//     });
+// }

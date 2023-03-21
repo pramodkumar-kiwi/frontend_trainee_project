@@ -17,6 +17,7 @@ import * as yup from "yup";
 import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
+import {toast} from "react-toastify";
 // import { Signup_getdata } from '../Services'
 import { emailRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE,TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE, PHONE_REQUIRE, PHONENO_INVALID, phoneRegExp, userNameMessage,userNameRegex, passwordMessage,passwordRegex} from "../Constants";
 
@@ -173,7 +174,7 @@ const validationSchema = yup.object({
             localStorage.clear("signup_vals");
 
             navigate("/");
-            alert("Succesfull SignUp!");
+            toast.success("Succesfull SignUp!");
         } catch (error) {
             console.log(error.response.status);
             if (error.response.status === 400) {

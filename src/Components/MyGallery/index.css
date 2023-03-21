@@ -1,8 +1,8 @@
 /* <------------------------------ Sub-Component: NAVBAR ----------------------------> */
 .navbar {
-    width: 100%;
-    display: flex;
-    background-color: rgb(40, 39, 39);
+  width: 100%;
+  display: flex;
+  background-color: rgb(40, 39, 39);
 }
 
 .nav-buttons {
@@ -33,24 +33,24 @@
 
 /* <--------------------------------PHOTO GALLERY ---------------------------------> */
 .photoGallery-container {
-    width: 100%;
+  width: 100%;
 }
 
 /* <------------------------------ Sub-Component: ADD_UPDATE-MODAL ----------------------------> */
 .add-icon-icon {
-    float: right;
-    margin-top: 20px;
-    margin-right: 20px;
-    height: 53px;
-    width: 65px;
-    font-size: 2.5rem;
-    border-radius: 5px;
-    border: none;
-    color: beige;
-    background-color: #111;
-    cursor: pointer;
-    text-align: center;
-    padding-top: 15px;
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+  height: 53px;
+  width: 65px;
+  font-size: 2.5rem;
+  border-radius: 5px;
+  border: none;
+  color: beige;
+  background-color: #111;
+  cursor: pointer;
+  text-align: center;
+  padding-top: 15px;
 }
 
 .add-icon-icon:hover {
@@ -70,141 +70,140 @@
 
 /* <------------------------------ Sub-Component: MY_ALBUMS ----------------------------> */
 
-.galleryHeading{
-    text-align: center;
-    margin: 0;
+.galleryHeading {
+  text-align: center;
+  margin: 0;
 }
 
-.del, .edit, .preview-gallery{
-    border: 1px solid black;
-    padding: 2px;
-    height: 20px;
-    width: 20px;
-    margin-right: 1px;
-    cursor: pointer;
+.del,
+.edit,
+.preview-gallery {
+  border: 1px solid black;
+  padding: 2px;
+  height: 20px;
+  width: 20px;
+  margin-right: 1px;
+  cursor: pointer;
 }
 
-.del:hover  {
-    background-color: black;
-    color: red;
+.del:hover {
+  background-color: black;
+  color: red;
 }
 
-.edit:hover{
-    background-color: black;
-    color: green;
+.edit:hover {
+  background-color: black;
+  color: green;
 }
 
 .preview-gallery:hover {
-    background-color: black;
-    color: beige;
+  background-color: black;
+  color: beige;
 }
 
 .container {
-    display: inline-block;
-    padding: 40px;
-    max-width: 500px;
-    margin: 0;
-    height: 210px;
-    width: 210px;
+  display: inline-block;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0;
+  height: 210px;
+  width: 210px;
 }
 
 .slide-show {
-    display: inline;
-    background-color: black;
-    cursor: pointer;
+  display: inline;
+  background-color: black;
+  cursor: pointer;
 }
 
 .slide-show:hover {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    border: 3px solid #111;
-    height: 210px;
-    width: 210px;
-    background-color: white;
+  display: grid;
+  grid-template-columns: auto auto;
+  border: 3px solid #111;
+  height: 210px;
+  width: 210px;
+  background-color: white;
 }
 
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0);
-    height: 100px;
-    width: 100px;
-    padding: 1px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0);
+  height: 100px;
+  width: 100px;
+  padding: 1px;
 }
 
 .drop-down {
-    position: absolute;
-    left: 1.5%;
-    top: 17.5%;
-    bottom: 5%;
-    height: 70vh;
-    width: 92%;
-    padding: 2rem;
-    border-radius: 0 0 5px 5px;
-    z-index: 5;
-    background: #FFF; 
+  position: absolute;
+  left: 1.5%;
+  top: 17.5%;
+  bottom: 5%;
+  height: 70vh;
+  width: 92%;
+  padding: 2rem;
+  border-radius: 0 0 5px 5px;
+  z-index: 5;
+  background: #fff;
 }
 
 .preview-btn {
-    height: 40px;
-    width: 40px;
-    font-size: 1.5rem;
-    border: 1px solid black;
-    border-radius: 5px;
-    color: black;
-    cursor: pointer;
-    position: absolute;
-    right: 4%;
-    top: 9%;
-    z-index: 2;
+  height: 40px;
+  width: 40px;
+  font-size: 1.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  position: absolute;
+  right: 4%;
+  top: 9%;
+  z-index: 2;
 }
 
 .preview-btn:hover {
-    color: red;
-    background-color: black;
+  color: red;
+  background-color: black;
 }
 
 /* <------------------------------ Sub-Component: ITEMS ----------------------------> */
 .myItem {
-    height: 415px;
-    width: 500px;
+  height: 415px;
+  width: 500px;
 }
 
-.myItem-container{
-    display: flex;
-    justify-content: center;
-    z-index: -5;
+.myItem-container {
+  display: flex;
+  justify-content: center;
+  z-index: -5;
 }
 
 .deleteImage {
-    height: 25px;
-    width: 25px;
-    position: absolute;
-    top: 4%;
-    right: 6%;
-    padding: 4px;
-    border: 1px solid black;
-    cursor: pointer;
-    border-radius: 5px;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: 4%;
+  right: 6%;
+  padding: 4px;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .deleteImage:hover {
-    background-color: black;
-    color: red;
+  background-color: black;
+  color: red;
 }
-
-
 
 /* <--------------------------------VIDEO GALLERY ---------------------------------> */
 .videoGallery-container {
-    width: 100%;
-    height: 84vh;
-    background-color: rgb(135, 178, 180);
+  width: 100%;
+  height: 84vh;
+  background-color: rgb(135, 178, 180);
 }
-
 
 /* <--------------------------------USER PROFILE ---------------------------------> */
 
@@ -246,3 +245,54 @@
   border-radius: 10px;
 }
 
+.card {
+  max-width: 425px;
+  margin: 16rem auto;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 10%);
+}
+
+.card-header {
+  background-color: #1d8aff;
+  color: #fff;
+  padding: 1rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+.form-control {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+.btn-primary {
+  margin-left: 136px;
+}
+.text_Forgotpassword{
+    font-size: medium;
+    padding: 12px;
+}
