@@ -4,6 +4,7 @@ import SignUp from "./Components/Signup/index";
 import PhotoGallery from './Components/MyGallery/PhotoGallery';
 import VideoGallery from './Components/MyGallery/VideoGallery';
 import UserProfile from './Components/MyGallery/UserProfile';
+import Forgotpassword from './Components/MyGallery/ForgotPassword';
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
           <Route path="/photoGallery" element={<PhotoGallery/>}></Route>
           <Route path="/videoGallery"  element={<VideoGallery/>}></Route>
           <Route path="/userProfile" element={<UserProfile/>}></Route>
+          <Route path ='forgotpassword' element={<Forgotpassword/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

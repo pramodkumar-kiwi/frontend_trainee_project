@@ -1,8 +1,8 @@
 /* <------------------------------ Sub-Component: NAVBAR ----------------------------> */
 .navbar {
-    width: 100%;
-    display: flex;
-    background-color: rgb(40, 39, 39);
+  width: 100%;
+  display: flex;
+  background-color: rgb(40, 39, 39);
 }
 
 .nav-buttons {
@@ -33,24 +33,24 @@
 
 /* <--------------------------------PHOTO GALLERY ---------------------------------> */
 .photoGallery-container {
-    width: 100%;
+  width: 100%;
 }
 
 /* <------------------------------ Sub-Component: ADD_UPDATE-MODAL ----------------------------> */
 .add-icon-icon {
-    float: right;
-    margin-top: 20px;
-    margin-right: 20px;
-    height: 53px;
-    width: 65px;
-    font-size: 2.5rem;
-    border-radius: 5px;
-    border: none;
-    color: beige;
-    background-color: #111;
-    cursor: pointer;
-    text-align: center;
-    padding-top: 15px;
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+  height: 53px;
+  width: 65px;
+  font-size: 2.5rem;
+  border-radius: 5px;
+  border: none;
+  color: beige;
+  background-color: #111;
+  cursor: pointer;
+  text-align: center;
+  padding-top: 15px;
 }
 
 .add-icon-icon:hover {
@@ -97,44 +97,44 @@
 }
 
 .preview-gallery:hover {
-    background-color: black;
-    color: beige;
+  background-color: black;
+  color: beige;
 }
 
 .container {
-    display: inline-block;
-    padding: 40px;
-    max-width: 500px;
-    margin: 0;
-    height: 210px;
-    width: 210px;
+  display: inline-block;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0;
+  height: 210px;
+  width: 210px;
 }
 
 .slide-show {
-    display: inline;
-    background-color: black;
-    cursor: pointer;
+  display: inline;
+  background-color: black;
+  cursor: pointer;
 }
 
 .slide-show:hover {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    border: 3px solid #111;
-    height: 210px;
-    width: 210px;
-    background-color: white;
+  display: grid;
+  grid-template-columns: auto auto;
+  border: 3px solid #111;
+  height: 210px;
+  width: 210px;
+  background-color: white;
 }
 
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0);
-    height: 100px;
-    width: 100px;
-    padding: 1px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0);
+  height: 100px;
+  width: 100px;
+  padding: 1px;
 }
 
 .drop-down {
@@ -151,28 +151,28 @@
 }
 
 .preview-btn {
-    height: 40px;
-    width: 40px;
-    font-size: 1.5rem;
-    border: 1px solid black;
-    border-radius: 5px;
-    color: black;
-    cursor: pointer;
-    position: absolute;
-    right: 4%;
-    top: 9%;
-    z-index: 2;
+  height: 40px;
+  width: 40px;
+  font-size: 1.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  position: absolute;
+  right: 4%;
+  top: 9%;
+  z-index: 2;
 }
 
 .preview-btn:hover {
-    color: red;
-    background-color: black;
+  color: red;
+  background-color: black;
 }
 
 /* <------------------------------ Sub-Component: ITEMS ----------------------------> */
 .myItem {
-    height: 415px;
-    width: 500px;
+  height: 415px;
+  width: 500px;
 }
 
 .myItem-container {
@@ -182,31 +182,28 @@
 }
 
 .deleteImage {
-    height: 25px;
-    width: 25px;
-    position: absolute;
-    top: 4%;
-    right: 6%;
-    padding: 4px;
-    border: 1px solid black;
-    cursor: pointer;
-    border-radius: 5px;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: 4%;
+  right: 6%;
+  padding: 4px;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .deleteImage:hover {
-    background-color: black;
-    color: red;
+  background-color: black;
+  color: red;
 }
-
-
 
 /* <--------------------------------VIDEO GALLERY ---------------------------------> */
 .videoGallery-container {
-    width: 100%;
-    height: 84vh;
-    background-color: rgb(135, 178, 180);
+  width: 100%;
+  height: 84vh;
+  background-color: rgb(135, 178, 180);
 }
-
 
 /* <--------------------------------USER PROFILE ---------------------------------> */
 
@@ -247,4 +244,66 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.card {
+  max-width: 40%;
+  border-radius: 0.25rem;
+  background-color: rgba(255,255,255,0.75);
+  box-shadow: 0 8px 32px 0 rgba(23, 22, 22,0.57);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-header {
+  background-color: #1d8aff;
+  color: white;
+  padding: 1rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+.form-control {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+
+.text_Forgotpassword{
+    font-size: medium;
+    padding: 12px;
+}
+
+.forgotPassButton{
+  background-color: #111;
+}
+
+.link_Login{
+  color: white;
+  text-decoration: none;
 }

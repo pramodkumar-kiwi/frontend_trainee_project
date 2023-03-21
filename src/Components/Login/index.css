@@ -76,12 +76,18 @@
 }
 
 .myLogin_myLink {
-    margin-left: 10px;
     text-decoration: none;
+    margin-left: 10px;
     color: black;
     font-size: 18px;
+    font-style: italic;
 }
 
 .myLogin_myLink:hover {
     border-bottom: 1px solid black;
 }
+
+.linkTextCenter{
+    margin: 41px;
+}
+

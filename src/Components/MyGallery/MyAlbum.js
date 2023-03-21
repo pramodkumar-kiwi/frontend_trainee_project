@@ -12,7 +12,7 @@ const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryName
   const [singleGalleryData, setSingleGalleryData] = useState([]);
   const [isTitleEdit, setIsTitleEdit] = useState(true);
   const [gName, setGName] = useState('')
-const [albumID, setAlbumID] = useState('');
+  const [albumID, setAlbumID] = useState('');
 
 
   // This is to close the slider
@@ -65,20 +65,20 @@ const [albumID, setAlbumID] = useState('');
   }
 
   const handleEditClick = async (galleryID) => {
- 
+
     await Gallery_putData(galleryID, {
       gallery_name: galleryName
     }).then((response) => {
       setIsEditOpen(!isEditOpen);
-      getAllAlbumsData();  
+      getAllAlbumsData();
       return response.data;
     })
-    .catch((error) => {
-      return error;
-    })
+      .catch((error) => {
+        return error;
+      })
 
-    
-   
+
+
   }
 
   return (
@@ -88,7 +88,7 @@ const [albumID, setAlbumID] = useState('');
         myAlbumDetails.map((detail, i) => {
 
           return <div className='container' key={i} >
-            
+
             <h3 className='galleryHeading'>{detail["gallery_name"]}
               <RiDeleteBinFill className='del' title='Delete Your Album' onClick={() => handleDeleteAlbum(detail["id"])} />
               <BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => handleEditAlbum(detail["gallery_name"], detail["id"])} />
@@ -125,25 +125,25 @@ const [albumID, setAlbumID] = useState('');
           </>
         )
       }
-{
-              isEditOpen && (
-                <>
-                  <div className="modal">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h3>GALLERY NAME:</h3>
-                        <h4>{isTitleEdit ? <input value={galleryName} onChange={galleryNameEdit} /> : <h3>{galleryName}</h3>}<BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => setIsTitleEdit(!isTitleEdit)} /></h4>
-                      </div>
-                      <div className="modal-footer">
-                        <button onClick={handleEditClose}>Cancel</button>
-                        <button onClick={() => handleEditClick(albumID)}>Save</button>
+      {
+        isEditOpen && (
+          <>
+            <div className="modal">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3>GALLERY NAME:</h3>
+                  <h4>{isTitleEdit ? <input value={galleryName} onChange={galleryNameEdit} /> : <h3>{galleryName}</h3>}<BsFillPencilFill className='edit' title='Edit Your Album' onClick={() => setIsTitleEdit(!isTitleEdit)} /></h4>
+                </div>
+                <div className="modal-footer">
+                  <button onClick={handleEditClose}>Cancel</button>
+                  <button onClick={() => handleEditClick(albumID)}>Save</button>
 
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )
-            }
+                </div>
+              </div>
+            </div>
+          </>
+        )
+      }
 
 
     </>
