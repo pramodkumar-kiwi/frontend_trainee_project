@@ -10,14 +10,20 @@ const config = {
     }
 };
 
+export const forgotPassword_postData = async (data) => {
+    const response = await axios.post(`${process.env.REACT_APP_API}`, data);
+    if (response.status === 200) {
+        return response;
+    }
+}
+
+
 export const Gallery_putData = async (id, data) => {
 
     const response = await axios.put(`${process.env.REACT_APP_API}/gallery/image-gallery/${id}/`, data , config) ;
 
     if (response.status === 200) {
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 }
 
@@ -28,8 +34,6 @@ export const ImageListing_deleteData = async (data) => {
 
     if (response.status === 200) {
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 }
 
@@ -40,8 +44,6 @@ export const albumListing_deleteData = async (data) => {
     if (response.status === 200) {
         console.log('Working');
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 }
 
@@ -51,8 +53,6 @@ export const albumListing_getData = async (data) => {
 
     if (response.status === 200) {
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 }
 
@@ -64,8 +64,6 @@ export const imageListing_getData = async (data) => {
 
     if (response.status === 200) {
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 
 }
@@ -75,8 +73,6 @@ export const signIn_postData = async (data) => {
     const response = await axios.post(`${process.env.REACT_APP_API}/user/signin/`, data);
     if (response.status === 200) {
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 }
 
@@ -86,8 +82,6 @@ export const userProfile_getData = async (data) => {
 
     if (response.status === 200) {
         return response;
-    } else {
-        console.log("Something went wrong!!");
     }
 }
 

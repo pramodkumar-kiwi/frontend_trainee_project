@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Modal.css";
 import axios from "axios";
 import { accessToken, IMAGE_FILE_LENGTH, IMAGE_lENGTH } from "../Constants";
+import {toast} from "react-toastify";
 
 
 const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAllAlbumsData, handleImageUpload, galleryCreated, setGalleryCreated}) => {
@@ -16,7 +17,7 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
     const imageFiles = e.target.files;
     const images = [];
     if (imageFiles.length > IMAGE_FILE_LENGTH) {
-      alert(IMAGE_lENGTH);
+      toast.error(IMAGE_lENGTH);
       return;
     }
     for (let i = 0; i < imageFiles.length; i++) {
@@ -45,16 +46,14 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
         gallery_name,
         config
       );
-      console.log(data);
       if (data?.message) {
-        alert(data.message);
+        toast.success(data.message);
       }
       setGalleryCreated(data);
       getAllAlbumsData();
     } catch (error) {
-      console.log(error);
       if (error?.response?.status === 400)
-        alert(error?.response?.data?.gallery_name[0]);
+        toast.error(error?.response?.data?.gallery_name[0]);
     }
   };
 
@@ -69,7 +68,7 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
     if (galleryCreated) {
       const { files } = event.dataTransfer;
       if (files && files.length > 0) {
-        //handleFiles(files)
+        handleFiles(files)
       }
     }
   };
@@ -106,7 +105,7 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
                 {files.length > 0 &&
                   files.map((val, ind) => (
                     <div key={ind} className="preview">
-                      <button onClick={() => removeImage(val)}> Delete </button>
+                      <button className ="Cross-Button"onClick={() => removeImage(val)}> X </button>
                       <img
                         src={URL.createObjectURL(val)}
                         alt="Preview"
