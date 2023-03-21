@@ -34,8 +34,7 @@ export const TOO_LONG="too long"
 export const IMAGE_GALLERY_CREATED = "Image Gallery Created"
 export const IMAGE_FILE_LENGTH = 10
 export const IMAGE_lENGTH="You can select up to 10 images only"
-export const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
+export const SUCCESS_MESSAGE=" Password reset link has been sent to your email address."
 
 
 export const error = "Invalid credentials!! Please try again.";
@@ -45,7 +44,6 @@ export const refreshToken = "refreshToken";
 
 export const addAlbum = "ADD";
 export const updateAlbum = "SAVE";
-export const GALLERY_IMAGE_COUNT = 4;
-
+export const GALLERY_IMAGE_COUNT=4;
 
   

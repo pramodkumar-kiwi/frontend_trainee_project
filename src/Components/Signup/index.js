@@ -17,9 +17,41 @@ import * as yup from "yup";
 import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 // import { Signup_getdata } from '../Services'
-import { emailRegExp,nameRegExp, F_NAME, MIN_CHARACTER, NAME_regex_message, FIRST_NAME_REQUIRE, ENTER_YOUR_LAST_NAME, ENTER_YOUR_USERNAME, LAST_NAME_IS_REQUIRED, UNIQUE_USERNAME, USERNAME_ALREADY_USE, USERNAME_IS_REQUIRED, USERNAME_LENGTH, ENTER_YOUR_EMAIL, EMAIL_REGEX_VALDATION_MESSAGE, UNIQUE_EMAIL , EMAIL_VALIDATION, ENTER_A_VALID_EMAIL, ENTER_PASSWORD, PASSWORD_LENGTH, PASSWORD_REQUIRE,TOO_SHORT, TOO_LONG, EMAIL_ALREADY_IN_USE, PHONE_REQUIRE, PHONENO_INVALID, phoneRegExp, userNameMessage,userNameRegex, passwordMessage,passwordRegex} from "../Constants";
+import {
+  emailRegExp,
+  nameRegExp,
+  F_NAME,
+  MIN_CHARACTER,
+  NAME_regex_message,
+  FIRST_NAME_REQUIRE,
+  ENTER_YOUR_LAST_NAME,
+  ENTER_YOUR_USERNAME,
+  LAST_NAME_IS_REQUIRED,
+  UNIQUE_USERNAME,
+  USERNAME_ALREADY_USE,
+  USERNAME_IS_REQUIRED,
+  USERNAME_LENGTH,
+  ENTER_YOUR_EMAIL,
+  EMAIL_REGEX_VALDATION_MESSAGE,
+  UNIQUE_EMAIL,
+  EMAIL_VALIDATION,
+  ENTER_A_VALID_EMAIL,
+  ENTER_PASSWORD,
+  PASSWORD_LENGTH,
+  PASSWORD_REQUIRE,
+  TOO_SHORT,
+  TOO_LONG,
+  EMAIL_ALREADY_IN_USE,
+  PHONE_REQUIRE,
+  PHONENO_INVALID,
+  phoneRegExp,
+  userNameMessage,
+  userNameRegex,
+  passwordMessage,
+  passwordRegex,
+} from "../Constants";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -27,111 +59,96 @@ const SignUp = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-    
   };
-const validationSchema = yup.object({
+  const validationSchema = yup.object({
     first_name: yup
       .string(F_NAME)
-      .min(3,MIN_CHARACTER )
-      .matches(
-        nameRegExp,
-        NAME_regex_message
-      )
+      .min(3, MIN_CHARACTER)
+      .matches(nameRegExp, NAME_regex_message)
       .required(FIRST_NAME_REQUIRE),
     last_name: yup
       .string(ENTER_YOUR_LAST_NAME)
-      .min(3,MIN_CHARACTER)
-      .matches(
-        nameRegExp,
-        NAME_regex_message
-      )
+      .min(3, MIN_CHARACTER)
+      .matches(nameRegExp, NAME_regex_message)
       .required(LAST_NAME_IS_REQUIRED),
-      username: yup
+    username: yup
       .string(ENTER_YOUR_USERNAME)
-      .matches(userNameRegex,userNameMessage)
-      .test(
-          UNIQUE_USERNAME,
-          USERNAME_ALREADY_USE,
-          async (value, context) => {
-              try {
-                  await yup
-                      .string(ENTER_YOUR_USERNAME)
-                      .required(USERNAME_IS_REQUIRED)
-                      .min(8,USERNAME_LENGTH )
-                      .validate(value);    
-              // Signup_getdata(value)
-              const config = {
-                headers: { "Content-Type": "application/json",
-                 "ngrok-skip-browser-warning":"237"
-               },
-            };
-            const response =  await axios.get(
-                `${process.env.REACT_APP_API}/user/username-validator/0/?username=${value}`,
-                config
-            );
-            if(response.status === 200){
-              return true;
-            }else{
-        
-            }
-            console.log(response);
-              } catch (error) {
-                  if (error?.response?.data?.username[0])
-                      error.message = error.response.data.username[0];
-                  return context.createError({
-                      message: error.message,
-                  });
-              }
+      .matches(userNameRegex, userNameMessage)
+      .test(UNIQUE_USERNAME, USERNAME_ALREADY_USE, async (value, context) => {
+        try {
+          await yup
+            .string(ENTER_YOUR_USERNAME)
+            .required(USERNAME_IS_REQUIRED)
+            .min(8, USERNAME_LENGTH)
+            .validate(value);
+          // Signup_getdata(value)
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "237",
+            },
+          };
+          const response = await axios.get(
+            `${process.env.REACT_APP_API}/user/username-validator/0/?username=${value}`,
+            config
+          );
+          if (response.status === 200) {
+            return true;
+          } else {
           }
-      ),
-  email: yup
+          console.log(response);
+        } catch (error) {
+          if (error?.response?.data?.username[0])
+            error.message = error.response.data.username[0];
+          return context.createError({
+            message: error.message,
+          });
+        }
+      }),
+    email: yup
       .string(ENTER_YOUR_EMAIL)
-      .matches(emailRegExp,EMAIL_REGEX_VALDATION_MESSAGE)
-      .test(
-          UNIQUE_EMAIL,
-          EMAIL_ALREADY_IN_USE,
-          async (value, context) => {
-              try {
-                  await yup
-                      .string(ENTER_YOUR_EMAIL)
-                      .required(EMAIL_VALIDATION)
-                      .email(ENTER_A_VALID_EMAIL)
-                      .validate(value);
-                  const config = {
-                      headers: { "Content-Type": "application/json",
-                      "ngrok-skip-browser-warning":"237"
-                     },
-                  };
-                  const response = await axios.get(
-                    `${process.env.REACT_APP_API}/user/emailvalidator/0/?email=${value}`,
-                      config
-                  );
-                  if(response.status === 200){
-                    return true;
-                  }else{
-              
-                  }
-                  console.log(response);
-                  return true;
-              } catch (error) {
-                  if (error?.response?.data?.email[0])
-                      error.message = error.response.data.email[0];
-                  return context.createError({
-                      message: error.message,
-                  });
-              }
+      .matches(emailRegExp, EMAIL_REGEX_VALDATION_MESSAGE)
+      .test(UNIQUE_EMAIL, EMAIL_ALREADY_IN_USE, async (value, context) => {
+        try {
+          await yup
+            .string(ENTER_YOUR_EMAIL)
+            .required(EMAIL_VALIDATION)
+            .email(ENTER_A_VALID_EMAIL)
+            .validate(value);
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "237",
+            },
+          };
+          const response = await axios.get(
+            `${process.env.REACT_APP_API}/user/emailvalidator/0/?email=${value}`,
+            config
+          );
+          if (response.status === 200) {
+            return true;
+          } else {
           }
-      ),
+          console.log(response);
+          return true;
+        } catch (error) {
+          if (error?.response?.data?.email[0])
+            error.message = error.response.data.email[0];
+          return context.createError({
+            message: error.message,
+          });
+        }
+      }),
     password: yup
       .string(ENTER_PASSWORD)
-      .min(8,PASSWORD_LENGTH)
-      .matches(passwordRegex,passwordMessage)
+      .min(8, PASSWORD_LENGTH)
+      .matches(passwordRegex, passwordMessage)
       .required(PASSWORD_REQUIRE),
-      
+
     contact: yup
       .string()
       .required(PHONE_REQUIRE)
-      .matches(phoneRegExp,PHONENO_INVALID)
+      .matches(phoneRegExp, PHONENO_INVALID)
       .min(10, TOO_SHORT)
       .max(10, TOO_LONG),
   });
@@ -151,45 +168,43 @@ const validationSchema = yup.object({
     validateOnChange: false,
     validateOnBlur: true,
     onSubmit: async (values) => {
-        console.log(values);
-        try {
-            const config = {
-                headers: { "Content-Type": "multipart/form-data",
-                 "ngrok-skip-browser-warning":"237"
-               },
-               
-            };
-            let formData = new FormData();
-            
-            Object.keys(values).forEach((key) => {
-                formData.append(key, values[key]);
-            });
+      console.log(values);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "ngrok-skip-browser-warning": "237",
+          },
+        };
+        let formData = new FormData();
 
-            const { data } = await axios.post(
-                `${process.env.REACT_APP_API}/user/signup/`,
-                formData,
-                config
-            );
-            console.log(data);
-            localStorage.clear("signup_vals");
+        Object.keys(values).forEach((key) => {
+          formData.append(key, values[key]);
+        });
 
-            navigate("/");
-            toast.success("Succesfull SignUp!");
-        } catch (error) {
-            console.log(error.response.status);
-            if (error.response.status === 400) {
-                const responseErrors = {};
-                for (const [key, value] of Object.entries(
-                    error.response.data
-                )) {
-                    responseErrors[key] = value[0];
-                }
-                formik.setErrors(responseErrors);
-            }
-            formik.setSubmitting(false);
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API}/user/signup/`,
+          formData,
+          config
+        );
+        console.log(data);
+        localStorage.clear("signup_vals");
+
+        navigate("/");
+        toast.success("Succesfull SignUp!");
+      } catch (error) {
+        console.log(error.response.status);
+        if (error.response.status === 400) {
+          const responseErrors = {};
+          for (const [key, value] of Object.entries(error.response.data)) {
+            responseErrors[key] = value[0];
+          }
+          formik.setErrors(responseErrors);
         }
+        formik.setSubmitting(false);
+      }
     },
-});
+  });
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -244,7 +259,9 @@ const validationSchema = yup.object({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.first_name && formik.errors.first_name}
-                helperText={formik.touched.first_name && formik.errors.first_name}
+                helperText={
+                  formik.touched.first_name && formik.errors.first_name
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
