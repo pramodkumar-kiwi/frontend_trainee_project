@@ -34,13 +34,13 @@ const ForgotPassword = () => {
         console.log(response);
         setResetPasswordSuccess(true);
         setResetPasswordError(null);
-        if (response?.status === 200) 
-        toast.success(response?.data?.message);
+        if (response?.status === 200) toast.success(response?.data?.message);
+        setEmailError(false);
       })
       .catch((error) => {
         console.log(error);
         if (error?.response?.status === 400)
-          toast.error(error?.response?.data?.email[0]);
+        toast.error(error?.response?.data?.email[0]);
         setIsResettingPassword(false);
         setResetPasswordSuccess(false);
         setResetPasswordError("");
@@ -100,7 +100,6 @@ const ForgotPassword = () => {
                 Password reset link has been sent to your email address.
               </Typography>
             )}
-            
           </form>
         </div>
       </div>

@@ -46,7 +46,6 @@ const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryName
   }
 
   const handleEditAlbum = (myGalleryName, galleryID) => {
-    // console.log(galleryID);
     setAlbumID(galleryID);
     setGalleryName(myGalleryName)
     setIsEditOpen(!isEditOpen);
