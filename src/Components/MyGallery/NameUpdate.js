@@ -11,7 +11,6 @@ const NameUpdate = ({setFile, files, setGalleryName, galleryName, handleClose, g
   };
 
   const handleFiles = (e) => {
-    console.log(e.target.files);
     const imageFiles = e.target.files;
     const images = [];
     if (imageFiles.length > IMAGE_FILE_LENGTH) {
@@ -21,13 +20,12 @@ const NameUpdate = ({setFile, files, setGalleryName, galleryName, handleClose, g
     for (let i = 0; i < imageFiles.length; i++) {
       images.push(imageFiles[i]);
     }
-    console.log(images);
+
     setFile(images);
   };
   // code for creating a photo gallery
   const createImageGallery = async (event) => {
     event.preventDefault();
-    console.log("called");
     try {
       const config = {
         headers: {
@@ -44,14 +42,12 @@ const NameUpdate = ({setFile, files, setGalleryName, galleryName, handleClose, g
         gallery_name,
         config
       );
-      console.log(data);
       if (data?.message) {
         alert(data.message);
       }
       setGalleryCreated(data);
       getAllAlbumsData();
     } catch (error) {
-      console.log(error);
       if (error?.response?.status === 400)
         alert(error?.response?.data?.gallery_name[0]);
     }

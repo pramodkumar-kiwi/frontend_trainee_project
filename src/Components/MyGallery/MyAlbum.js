@@ -136,7 +136,6 @@ const MyAlbum = ({ files, setFile, myAlbumDetails, getAllAlbumsData, galleryName
                 <div className="modal-footer">
                   <button onClick={handleEditClose}>Cancel</button>
                   <button onClick={() => handleEditClick(albumID)}>Save</button>
-
                 </div>
               </div>
             </div>

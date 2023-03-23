@@ -5,52 +5,38 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import { emailRegExp, EMAIL_REGEX_VALDATION_MESSAGE } from "../Constants";
 import { forgotPassword_postData } from "../Services";
 import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [isResettingPassword, setIsResettingPassword] = useState(false);
-  const [resetPasswordSuccess, setResetPasswordSuccess] = useState(false);
-  const [resetPasswordError, setResetPasswordError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validate email format
-    if (!emailRegExp.test(email)) {
-      setEmailError(true);
-      return;
-    }
-
     // Send API request to reset password
-    setIsResettingPassword(true);
+  
     forgotPassword_postData({
       email: email,
     })
       .then((response) => {
-        console.log(response);
-        setResetPasswordSuccess(true);
-        setResetPasswordError(null);
-        if (response?.status === 200) toast.success(response?.data?.message);
         setEmailError(false);
+        if (response?.status === 200) toast.success(response?.data?.message);
+        
       })
       .catch((error) => {
-        console.log(error);
         if (error?.response?.status === 400)
         toast.error(error?.response?.data?.email[0]);
-        setIsResettingPassword(false);
-        setResetPasswordSuccess(false);
-        setResetPasswordError("");
       });
-    setEmail("");
+      setEmail("");
+
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
     setEmailError(false);
+    setEmail(event.target.value);
+   
   };
 
   return (
@@ -77,7 +63,6 @@ const ForgotPassword = () => {
                 value={email}
                 onChange={handleEmailChange}
                 error={emailError}
-                helperText={emailError && EMAIL_REGEX_VALDATION_MESSAGE}
               />
             </Grid>
             <Button
@@ -85,9 +70,8 @@ const ForgotPassword = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 1 }}
-            //   disabled={isResettingPassword}
             >
-              {isResettingPassword ? "Resetting Password..." : "Reset Password"}
+             RESET PASSWORD
             </Button>
             <Button fullWidth variant="contained" sx={{ mt: 1, mb: 2 }}>
               <Link to="/signin" className="link_Login">
@@ -95,11 +79,6 @@ const ForgotPassword = () => {
               </Link>
             </Button>
 
-            {resetPasswordSuccess && (
-              <Typography color="success">
-                Password reset link has been sent to your email address.
-              </Typography>
-            )}
           </form>
         </div>
       </div>

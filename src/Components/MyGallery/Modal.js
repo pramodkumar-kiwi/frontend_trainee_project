@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Modal.css";
 import axios from "axios";
 import { accessToken, IMAGE_FILE_LENGTH, IMAGE_lENGTH } from "../Constants";
@@ -13,7 +13,6 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
   };
 
   const handleFiles = (e) => {
-    console.log(e.target.files);
     const imageFiles = e.target.files;
     const images = [];
     if (imageFiles.length > IMAGE_FILE_LENGTH) {
@@ -23,13 +22,11 @@ const Modal = ({setFile, files, setGalleryName, galleryName, handleClose, getAll
     for (let i = 0; i < imageFiles.length; i++) {
       images.push(imageFiles[i]);
     }
-    console.log(images);
     setFile(images);
   };
   // code for creating a photo gallery
   const createImageGallery = async (event) => {
     event.preventDefault();
-    console.log("called");
     try {
       const config = {
         headers: {

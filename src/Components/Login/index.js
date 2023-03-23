@@ -44,11 +44,11 @@ const LoginPage = () => {
                 setErr(false);
                 localStorage.setItem("accessToken", response.data.access);
                 localStorage.setItem("refreshToken", response.data.refresh);
-                console.log(response.data);
                 navigate("/photoGallery");
               })
               .catch((error) => {
                 setErr(true);
+                return error;
               });
           }}
         >

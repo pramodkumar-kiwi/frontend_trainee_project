@@ -11,6 +11,7 @@ import { accessToken, refreshToken } from '../Constants'
 const VideoGallery = () => {
   const navigate = useNavigate();
 
+
   // This is to check whether user is authenticated
   useEffect(() => {
     if (
@@ -24,9 +25,13 @@ const VideoGallery = () => {
   return (<>
     <Navbar />
     <div className='videoGallery-container'>
+        <i
+          className="fa
+      -solid fa-plus add-icon-icon"
+        ></i>
+    
       <Modal />
       <br />
-      <Albums />
     </div>
   </>
   )
