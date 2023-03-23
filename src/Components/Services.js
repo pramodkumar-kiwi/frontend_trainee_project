@@ -83,6 +83,8 @@ export const imageListing_getData = async (data) => {
   }
 };
 
+
+
 /* This is to get tokens as response from the Sign-in API after the correct credentials are sent */
 export const signIn_postData = async (data) => {
   const response = await axios.post(
@@ -114,3 +116,13 @@ export const signOut_postData = async (data) => {
   );
   return response;
 };
+
+
+export const signUp_postData = async(formData, config_multiPart) => {
+  const response = await axios.post(
+  `${process.env.REACT_APP_API}/user/signup/`,
+  formData,
+  config_multiPart
+);
+return response;
+}

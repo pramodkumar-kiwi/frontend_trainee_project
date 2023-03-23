@@ -18,7 +18,7 @@ import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { Signup_getdata } from '../Services'
+import { emailvalidator_GetData, signUp_postData } from "../Services";
 import {
   emailRegExp,
   nameRegExp,
@@ -126,7 +126,6 @@ const SignUp = () => {
           );
           if (response.status === 200) {
             return true;
-          } else {
           }
           return true;
         } catch (error) {
@@ -167,7 +166,7 @@ const SignUp = () => {
     validateOnBlur: true,
     onSubmit: async (values) => {
       try {
-        const config = {
+        const config_multiPart = {
           headers: {
             "Content-Type": "multipart/form-data",
             "ngrok-skip-browser-warning": "237",
@@ -178,14 +177,8 @@ const SignUp = () => {
         Object.keys(values).forEach((key) => {
           formData.append(key, values[key]);
         });
-
-        const { data } = await axios.post(
-          `${process.env.REACT_APP_API}/user/signup/`,
-          formData,
-          config
-        );
+        signUp_postData(formData, config_multiPart);
         localStorage.clear("signup_vals");
-
         navigate("/");
         toast.success("Succesfull SignUp!");
       } catch (error) {
