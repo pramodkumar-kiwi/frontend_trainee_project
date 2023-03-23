@@ -96,7 +96,6 @@ const SignUp = () => {
             return true;
           } else {
           }
-          console.log(response);
         } catch (error) {
           if (error?.response?.data?.username[0])
             error.message = error.response.data.username[0];
@@ -129,7 +128,6 @@ const SignUp = () => {
             return true;
           } else {
           }
-          console.log(response);
           return true;
         } catch (error) {
           if (error?.response?.data?.email[0])
@@ -168,7 +166,6 @@ const SignUp = () => {
     validateOnChange: false,
     validateOnBlur: true,
     onSubmit: async (values) => {
-      console.log(values);
       try {
         const config = {
           headers: {
@@ -187,13 +184,11 @@ const SignUp = () => {
           formData,
           config
         );
-        console.log(data);
         localStorage.clear("signup_vals");
 
         navigate("/");
         toast.success("Succesfull SignUp!");
       } catch (error) {
-        console.log(error.response.status);
         if (error.response.status === 400) {
           const responseErrors = {};
           for (const [key, value] of Object.entries(error.response.data)) {

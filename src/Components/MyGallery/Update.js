@@ -19,7 +19,6 @@ const Update = ({ setFile, files, setGalleryName, galleryName, handleClose, getA
 
     const handleEditClick = ( ) => {
         // Gallery_putData()
-        console.log("EDITT")
     }
 
     

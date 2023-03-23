@@ -19,7 +19,6 @@ const UserProfile = () => {
     }
   });
  const handleOpenProfile = () => {
-  console.log("open")
       setOpenUserModal(!openuserModal)
  }
 

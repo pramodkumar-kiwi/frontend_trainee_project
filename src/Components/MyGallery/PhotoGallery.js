@@ -48,7 +48,6 @@ const PhotoGallery = () => {
         formData,
         config
       );
-      console.log(addImage);
       
       notify();
       setFile([]);
@@ -56,7 +55,6 @@ const PhotoGallery = () => {
       setGalleryName('');
       getAllAlbumsData();
     } catch (error) {
-      console.log(error);
       if (error?.response?.status === 400)
         toast.error(error?.response?.data?.image[0]);
         
