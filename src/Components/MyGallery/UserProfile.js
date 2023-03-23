@@ -4,6 +4,7 @@ import './index.css'
 import Navbar from './Navbar'
 import { accessToken, refreshToken } from '../Constants'
 import './Modal.css';
+import {signOut_postData} from '../Services'
 
 const UserProfile = () => {
   const [openuserModal,setOpenUserModal]=useState(false)
@@ -26,8 +27,18 @@ const UserProfile = () => {
 
   // This is to log-out the user and redirect to the log-in page 
   const handleLogOut = () => {
-    localStorage.clear();
-    navigate('/');
+    signOut_postData({
+      refresh: localStorage.getItem("refreshToken")
+    })
+    .then((response) => {
+      console.log(response);
+      localStorage.clear();
+      navigate('/');
+    }).catch((error)=> {
+      console.log(error);
+    })
+
+    
   };
 
 

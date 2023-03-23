@@ -109,8 +109,7 @@ export const userProfile_getData = async (data) => {
 // This is to log-out the current logged-in user after the bearer is passed
 export const signOut_postData = async (data) => {
   const response = await axios.post(
-    `${process.env.REACT_APP_API}/user/sign-out/`,
-    { config, data }
+    `${process.env.REACT_APP_API}/user/sign_out/`,data, config
   );
   return response;
 };
