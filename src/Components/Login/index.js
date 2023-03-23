@@ -1,69 +1,113 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import './index.css'
+import React, { useState } from "react";
+import "./index.css";
+import { useNavigate, Link } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { signIn_postData } from "../Services";
+import { error } from "../Constants";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const error = "INVALID CREDENTIALS!!! PLEASE TRY AGAIN.";
+  const [err, setErr] = useState(false);
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value)
-    }
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value)
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  /* This is to hide error message received after entering invalid credentials as soon as input fields are changed */
+  const handleChange = () => {
+    setErr(false);
+  };
 
-        axios.post('/api/login', { username, password })
-            .then((response) => {
-                setPassword('');
-                setUsername('');
-                console.log(response.data);
-                //navigation in future
+  return (
+    <div className="myLogin-bg-img">
+      <div className="myLogin-form">
+        {err ? <p className="myLogin-err">{error}</p> : ""}
+        <h1 className="myLogin-heading">Login Page</h1>
+
+        <Formik
+          initialValues={{ username: "", password: "" }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.username) {
+              errors.username = "Username is required";
+            }
+            if (!values.password) {
+              errors.password = "Password is required";
+            }
+            return errors;
+          }}
+          /* This is to submit the form and logging in the user with the correct credentials*/
+          onSubmit={(values, { setSubmitting }) => {
+            setSubmitting(false);
+            signIn_postData({
+              username: values.username,
+              password: values.password,
             })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+              .then((response) => {
+                setErr(false);
+                localStorage.setItem("accessToken", response.data.access);
+                localStorage.setItem("refreshToken", response.data.refresh);
+                navigate("/photoGallery");
+              })
+              .catch((error) => {
+                setErr(true);
+                return error;
+              });
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div>
+                <Field
+                  type="text"
+                  name="username"
+                  className="myLogin-inputs"
+                  placeholder="Enter Username"
+                  onClick={handleChange}
+                />
+                <ErrorMessage
+                  name="username"
+                  component="div"
+                  className="myLogin_error_msg"
+                />
+              </div>
+              <div>
+                <Field
+                  type="password"
+                  name="password"
+                  className="myLogin-inputs"
+                  placeholder="Enter Password"
+                  onClick={handleChange}
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="myLogin_error_msg"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="myLogin_btn"
+              >
+                Login
+              </button>
 
-    return <>
-        <div className='body'></div>
-        <div className='bg-img'>
-            <div className='form-container'>
-                <form className='form'>
-                    <p style={{ color: "red", margin: "0" }}>
-                        {error}
-                    
-                    </p>
+              <hr className=".myLogin_hr" />
+              <p>
+                <Link to="/forgotpassword" className="linkTextCenter myLogin_myLink">
+                  Forgotten your password?
+                </Link>
+              </p>
+              <p style={{ textAlign: "center" }}>
+                Don't have an account?
+                <Link to="/signUp" className="myLogin_myLink">
+                  Sign Up
+                </Link>
+              </p>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  );
+};
 
-                    <h1>Login Page</h1>
-
-                    <label htmlFor="email"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" value={username} onChange={handleUsernameChange} required />
-
-                    <label htmlFor="password"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" value={password} onChange={handlePasswordChange} required />
-
-                    <button type="submit" className="btn" onClick={handleSubmit}>Login</button>
-
-                    <hr />
-                    <p>Don't have an account?</p>
-
-                    <button type="submit" className="btn">Sign Up</button>
-                </form>
-            </div>
-        </div>
-
-    </>
-}
-
-export default LoginPage
-
-
-
-
-
-{/* { error && <div>{error}</div>} */}
+export default LoginPage;
