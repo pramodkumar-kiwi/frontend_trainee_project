@@ -18,7 +18,7 @@ import axios from "axios";
 import Link from "@mui/material/Link";
 import { Link as Rlink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { emailvalidator_GetData, signUp_postData } from "../Services";
+import {  signUp_postData } from "../Services";
 import {
   emailRegExp,
   nameRegExp,
@@ -94,8 +94,7 @@ const SignUp = () => {
           );
           if (response.status === 200) {
             return true;
-          } else {
-          }
+          } 
         } catch (error) {
           if (error?.response?.data?.username[0])
             error.message = error.response.data.username[0];

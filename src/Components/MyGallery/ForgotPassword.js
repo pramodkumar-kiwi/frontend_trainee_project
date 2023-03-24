@@ -31,7 +31,6 @@ const ForgotPassword = () => {
         setEmail("");
 
       });
-    // setEmail("");
   };
 
   const handleEmailChange = (event) => {
